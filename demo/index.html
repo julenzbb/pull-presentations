@@ -241,10 +241,28 @@
   .footnote .pb-logo{width:60px;height:11px;opacity:.5}
 
   @media (max-width:880px){
+    /* fix: avoid flex-centering clipping the top (header+tabs) when content is taller than the viewport */
+    body{align-items:flex-start;padding:18px}
     .body{grid-template-columns:1fr}
     .stage{border-right:0;border-bottom:1px solid var(--line)}
     .meter{grid-template-columns:repeat(2,1fr)}
     .tab .clk{display:none}
+  }
+  @media (max-width:560px){
+    body{padding:12px}
+    .head h1{font-size:19px}
+    .head .sub{font-size:12.5px}
+    .card{border-radius:18px}
+    /* compact, centered, easy-to-tap tabs */
+    .tab{flex-direction:column;align-items:center;text-align:center;gap:7px;padding:13px 6px}
+    .tab .ti{width:34px;height:34px;border-radius:10px}
+    .tab .ti svg{width:18px;height:18px}
+    .tab .tt{align-items:center}
+    .tab .lvl{align-self:center;font-size:9px;letter-spacing:.1em}
+    .tab .nm{font-size:12px;margin-top:6px;line-height:1.2}
+    .stage{padding:24px 12px 18px}
+    .info{padding:20px 18px}
+    .compare{grid-template-columns:1fr}
   }
 </style>
 </head>
