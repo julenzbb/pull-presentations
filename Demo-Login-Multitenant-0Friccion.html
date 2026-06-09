@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo · Login / Registro Multitenant · 0 Fricción</title>
+<style>
+  :root{
+    --ink:#0a0a0a; --paper:#ffffff; --muted:#6b6b6b; --soft:#8c8c8c;
+    --line:#e7e7e7; --line-2:#d8d8d8; --bg-soft:#f4f4f5;
+    --good:#137a4f; --good-bg:#e9f5ef; --bad:#b42318; --bad-bg:#fdecea;
+    --radius:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 80% -10%, #ececee 0%, transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, #ececee 0%, transparent 55%),
+      var(--bg-soft);
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    display:flex; align-items:center; justify-content:center; min-height:100vh; padding:28px;
+  }
+  .wrap{width:100%; max-width:1120px}
+
+  /* ---------- Brand wordmark ---------- */
+  :root{--pb-logo:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAAyCAYAAADm1uYqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAm3SURBVHgB7Z2Lld22EYZ/5aQApYJAaUBKCohgN2AlBWTpFBBvXEBEpwBHacCi04DXKSCLrUBSAxbiBiQ3kIT/gvTSGxIYPi9wNd85kO6Sc/kEBoOZAS6gKIqiKIqiKIqiKIqiKPnz3w3Ku7a8ass3bfmsLU8wn0ZwngrzuF5xTCv47jX2oxKc/yWO4yHCu+U5+a7fIX19FutpBOdJFV4v39WLFddUbXAdez+vywPPZYFN7pn16BqhXl20xcRO+nNsAyvzk64867b5ttRt+RpKydi2PMc2yudU9B2oRVC6vi1Xbfl79/lc+GSGLNupw+mh7rDd56r7v2nLFxh5Nz/DfpjuxG+R0JpKlrAi/Q2h97M4LwyCNcJ7e4bzYNjwJcxRbkdTteU7hI7yJ+ypsHoMgkl+LhXjQ4CVn435EueNQXBjXKB8LOZhEN5zrjxAGKF9Ndx4hMIifDAcoxooJUBfzxI/ZKnwfg3KZolBUCF/Pm3Ll/0fRyksQqX1DZTcqXAeFscc+g61ZJ5iPhZlQEvf8oPE6f4tpocGpi2Pu/0GaZ50si+g5Mpzodx7BKe1w7Tj+j32xyH0wvcxXaHytUhju+KwHId1LH1ebFcG81mi5KQwAvg5QnBjDIPQOdKXlhqacnj4F3TPd6vQeQ15GHOMRvDdCvO4XnFMK/juNfajEpz/JbalEpyT5S2OG0I1WP8OasjuK9aRVoLvn4oKy9MKLJZhE8f9D2Tt9RFCfUpdJ49ntxwS1gg9boq50QzlOKSRo49QVjpADZn1k3PkLMZFZB/TA1xkv8VpobL6o0COVtYnW/uwasjMWo0Y5onE0d6gzNwlST6gQd6RsylsZJ9ry5vI/qc4PQ6yDuXp1gqLyuq1QM5AyREjkLlCmTihXGkKyyb2e6QtrFPfM4d8/xTImT2ihG8EMo+h5IYRyv0bSk7ERis0IDzSRkQOIx4vkHm41dScuSdW8kMaoZoTyaoQV4RsSLlZbEdENrckNqTrFZVHuK+HkWM0OC2i576HwlLKRNpQ5wwf6Ay2kf0NjlNYRiDDBl6SwjKI+x1vBp95b3ZCjhbWp8gfv8eQUFKhS+vFPhQk/keLMqkEMqVN1LeJ/a8Gn2Oumn7xglMiOf8uCkvin1I/SJ58K5C5QHkYpK/bo7yAQioNY6ikUp2RxelgysJvEzJ0zH+9x5DQCmQclBxpkM50Z0/IVRz+jPyh5UBFVQtkKeOxDotlSKPrc87XO9x7HOJQ+b3AaTCQOf5vtlZYFWRDwlJD4+eOR0j+/Swhd4nwnkfXLDoYKtDrke0G8sgnle8Ww0FJ1v0YDiEZdw4W8bZ2XwF6xB3vT7p9R7trmOn+L4HcX9vit1RYBqHnTeGgkcScqRGiRimfQtWVmHWQOobFXSO/gcwSus+amRMO6UzwXLGJ/Tcj2xymLZnej+WwDRzmGUxfZ//eLpA2cuiLq/lhC4U1NLsl1lUJ0YgPGSqg3yHMU7QC+TUKw+DOCvI4jv4eHcollaH+amRbyne89SqkzyGfTD9Fg4H7QaKwqHXrke2sqL/EvEzZc1uS9lzxCEOUCqHCGZwXrK+8L9bf0iKDRNJJjEUFHeLDffqxLpEHDiPWr1RhbRHy9Fhm8iuno+mKRVjLTNoxlYDtSo1g9TuUg03s9xg3DBzimK54nI7eNeDGdh61gJ9H6LE1/6o8LII1ck7KaohB8KOVlK6RiqhN5VzdjxwuOfbecKjLd/FobOfeme7MnWBEkMtHqLIqC1YYrqdtBbJTa0E9wPLvSqHDfyrFgjmBHB1cCK6lacv3WLfG2Vss491M+ZT/ykX20YIxkf2nTG/oqbpSIwwLf2QPhdVXQIcQinRQSsMghJpNQo4NjT4g9uh+ZD+jxqmpI3X32WMZ7AjdxL5+Oys97+cR4nwlkInxK+yPZHVRKvEHkX0XieNvmd4Q65BSnUjd/f+j0pIoLF64pAfgg2AUgpX3CmpRlUyNdKNgL5xKHk3VAVokDvvj2/J7jEfOhhisXyZ5b6xAJhaZSw3tt0xvYB2Zmj1B65cBgFQHwXv5oTuWSGFR+WgqwoeDRdqfQ0VTQqb7EHaotAZT98b9DvNZO7SVIlkV1WIdW6Q38Hm8Qdz6ZdZAjbiC7ddzb9ry/iinu1IOqSx38gXKRDLDwiJf1uS8zSHlI9sS1qXU0uq879tggCos5T5WICNZpDFHvEDGTGyXBBD2Zov0Iul5jooK0xJLKSw++1slqgpLE1mHGOjyQGxAuaZwVDiOI9MbPNJ16nYVmJwUlqQRzO1hzjV3SFnGL4RyuSrkI4dqR56LpJ75bVvOSWF5gcycteANZAruNZS5lNoRSOpDrsrK4NgpUkdaWGJyWiJZutpl/8OLEtkUHpp+McQjvgRJDytzaYqefpA/CeRyvS8rkGkgXxzzaeKYvYPfISNyUlgOssbyJUJOTSyMTKUmmSXusI6HWJdoSKR5bnud/x1+qrTZYG3iO4wkMkVgaWb3lkjSCaispJO4b5AnknQGOq+lCpedjk3IcL9DRuT2IxRsBKmwOh80M5JvF/TCXYXtozi2228gO98aOMT4DutosDzP7RnWm+4MK9eDv5noZxPfoaJk5jinXDnshzQyF5PrV2aQpGvcLsOL5XyEdbDzmFI4FnFi65KN4QQyR/uxkuSmsF5AVrEq3CW39SF2Vkz6uCxkHJVlXRoNQqJeykFtEJSWx/SvzRjsz68ROqgxeA9sdBKfG5VVg+VRYypNycqZMV5i/GfbLdL3MHco20+ENhEZi9OsQjpJbgrLIyitS4Fsn0y21ML4GMoYrJy0XiWrxxKD5Yppi+xw1oMK6/EI950jkjq+JDeOSs4kZKjwJT9Ocgg55mFxiJKa87XFOTyUKdhprFm1oDSoOGnZeOSJZGi25H1J/HVrh7mbkqPCYg9Pp/peDl02xhpKCslk4XOAfqOcF/AzkKVjLLWwUqTmXh6F4T+5Zrp7hCEbG8xWk0p5HFpWpU3aPRXsOH6D8MzYqI+a3HsUvB9aJbzHtcGXPbECGY9l1qFEYXHIbZAHJuepOR6hMtFUp7W1tMH0FZMKsIYylxp378EhPM++rOFIBTi8ZtYlWtkfd8XPOMaeTB3fIs3SuZ3slCQjmaV+4jnPTKI8H9Ppnpp5f+pEuqYrVVv+gP9/gcOQ9vAB8WVcteUfWGbuexyzKsHryPYjzu8EMh5374FYrP95c76r1wKZK6zzLfEYtBC/787nsYy938fU83BIX7PDcj5H+j36iW2x59EvLyOhH/28Scj8IM1zyQ2Lu1/tGYbfPe7yUTwURVEURVEURVEURVGUc+B/fEnhOTOMKm8AAAAASUVORK5CYII=")}
+  .pb-logo{display:inline-block;background:var(--pb-logo) left center/contain no-repeat;vertical-align:middle}
+
+  /* ---------- Header ---------- */
+  .head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:18px;flex-wrap:wrap}
+  .head .lockup{display:flex;align-items:center;gap:13px}
+  .head .pb-logo{width:128px;height:21px}
+  .head .bar{width:1px;height:16px;background:var(--line-2)}
+  .head .grp{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--soft);font-weight:700}
+  .head h1{font-size:21px;font-weight:800;letter-spacing:-.02em;margin-top:9px}
+  .head .sub{font-size:13.5px;color:var(--muted);margin-top:2px}
+  .pill0{
+    display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;
+    font-size:12px;font-weight:700;letter-spacing:.06em;padding:9px 15px;border-radius:999px;white-space:nowrap
+  }
+  .pill0 .dot{width:7px;height:7px;border-radius:50%;background:#46d39a;box-shadow:0 0 0 0 rgba(70,211,154,.6);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(70,211,154,.55)}70%{box-shadow:0 0 0 7px rgba(70,211,154,0)}100%{box-shadow:0 0 0 0 rgba(70,211,154,0)}}
+
+  /* ---------- Card ---------- */
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:24px;box-shadow:0 24px 60px -34px rgba(0,0,0,.32);overflow:hidden}
+
+  /* ---------- Scenario selector ---------- */
+  .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-bottom:1px solid var(--line);background:#f4f4f5}
+  .tab{
+    appearance:none;border:0;background:transparent;cursor:pointer;text-align:left;
+    padding:17px 18px 16px;border-right:1px solid var(--line);position:relative;
+    display:flex;align-items:flex-start;gap:12px;transition:background .18s ease
+  }
+  .tab:last-child{border-right:0}
+  .tab::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:transparent;transition:background .2s ease}
+  .tab:hover{background:#ececee}
+  .tab.active{background:#fff;box-shadow:0 12px 26px -20px rgba(0,0,0,.55)}
+  .tab.active::before{background:var(--ink)}
+  /* icon badge */
+  .tab .ti{flex:none;width:42px;height:42px;border-radius:12px;background:#e5e5e9;color:#a0a0a6;display:flex;align-items:center;justify-content:center;transition:background .2s ease,color .2s ease}
+  .tab .ti svg{width:22px;height:22px}
+  .tab:hover .ti{background:#d9d9de}
+  .tab.active .ti{background:var(--ink);color:#fff}
+  .tab.active:hover .ti{background:var(--ink)}
+  .tab .tt{display:flex;flex-direction:column;min-width:0}
+  .tab .lvl{align-self:flex-start;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:800;color:#9a9aa0;background:#e9e9ec;padding:3px 7px;border-radius:5px}
+  .tab.active .lvl{color:#fff;background:var(--ink)}
+  .tab .nm{font-size:15px;font-weight:700;margin-top:6px;letter-spacing:-.01em;color:#67676d}
+  .tab.active .nm{color:var(--ink)}
+  .tab .clk{font-size:12px;color:#a0a0a6;margin-top:2px}
+  .tab.active .clk{color:var(--muted)}
+
+  /* ---------- Body grid ---------- */
+  .body{display:grid;grid-template-columns:340px 1fr;gap:0}
+  .stage{
+    background:
+      radial-gradient(420px 380px at 50% 32%, #1a1a1c 0%, #0c0c0d 60%, #070708 100%);
+    padding:34px 24px 24px;display:flex;flex-direction:column;align-items:center;gap:18px;border-right:1px solid var(--line)
+  }
+
+  /* ---------- Phone ---------- */
+  .phone{
+    width:264px;height:548px;border-radius:42px;background:#0a0a0a;
+    padding:11px;box-shadow:0 0 0 2px #2a2a2c, 0 30px 60px -22px rgba(0,0,0,.75);position:relative;flex:none
+  }
+  .screen{
+    position:relative;width:100%;height:100%;border-radius:32px;overflow:hidden;background:#fff
+  }
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:108px;height:24px;background:#0a0a0a;border-radius:0 0 16px 16px;z-index:40}
+  .statusbar{position:absolute;top:0;left:0;right:0;height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:11px;font-weight:700;color:#111;z-index:30}
+  .statusbar.dark{color:#fff}
+  .statusbar .ic{display:flex;gap:4px;align-items:center}
+  .statusbar .ic span{display:inline-block;width:15px;height:9px;border:1.4px solid currentColor;border-radius:2px;position:relative;opacity:.85}
+  .statusbar .ic span::after{content:"";position:absolute;right:-3px;top:2px;width:2px;height:3px;background:currentColor;border-radius:0 1px 1px 0}
+
+  /* screen pages */
+  .pg{position:absolute;inset:0;opacity:0;transform:translateY(8px) scale(.995);pointer-events:none;transition:opacity .45s ease, transform .45s ease;display:flex;flex-direction:column}
+  .pg.show{opacity:1;transform:none;pointer-events:auto}
+  .pad{padding:44px 18px 18px}
+
+  /* splash */
+  .splash{background:#0a0a0a;color:#fff;align-items:center;justify-content:center;text-align:center}
+  .splash .pb-logo{width:150px;height:25px;filter:invert(1);margin-bottom:26px}
+  .spinner{width:26px;height:26px;border-radius:50%;border:2.5px solid rgba(255,255,255,.18);border-top-color:#fff;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .splash .cap{margin-top:18px;font-size:12px;color:#8a8a8a;letter-spacing:.04em}
+
+  /* app top bar */
+  .appbar{display:flex;align-items:center;justify-content:space-between;padding:40px 16px 10px}
+  .appbar .pb-logo{width:104px;height:17px}
+  .avatar{width:30px;height:30px;border-radius:50%;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex:none}
+  .navrow{display:flex;gap:14px;padding:0 16px 10px;font-size:12px;font-weight:600;color:#777;border-bottom:1px solid #eee}
+  .navrow b{color:#111;border-bottom:2px solid #111;padding-bottom:8px}
+
+  /* product grid */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:14px 16px;overflow:hidden}
+  .prod .ph{height:104px;border-radius:9px;background:linear-gradient(135deg,#eeeef0,#e1e1e5);position:relative;overflow:hidden}
+  .prod .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.55) 50%,transparent 80%);transform:translateX(-100%);animation:sheen 2.6s infinite}
+  @keyframes sheen{to{transform:translateX(100%)}}
+  .prod .l1{height:7px;width:80%;background:#e6e6e9;border-radius:3px;margin:8px 0 5px}
+  .prod .l2{height:7px;width:45%;background:#efeff1;border-radius:3px}
+
+  /* toast */
+  .toast{
+    position:absolute;left:12px;right:12px;top:40px;z-index:50;background:#0a0a0a;color:#fff;border-radius:13px;
+    padding:11px 13px;display:flex;align-items:center;gap:10px;box-shadow:0 16px 30px -14px rgba(0,0,0,.6);
+    opacity:0;transform:translateY(-14px);transition:opacity .4s ease, transform .4s ease
+  }
+  .toast.in{opacity:1;transform:none}
+  .toast .tk{width:22px;height:22px;border-radius:50%;background:var(--good);display:flex;align-items:center;justify-content:center;flex:none}
+  .toast .tk svg{width:12px;height:12px}
+  .toast .tt{font-size:11.5px;line-height:1.35}
+  .toast .tt b{font-weight:700}
+  .toast .tt a{color:#9fd9bf;text-decoration:underline;font-weight:600}
+
+  /* bottom sheet */
+  .dim{position:absolute;inset:0;background:rgba(0,0,0,.34);z-index:45;opacity:0;transition:opacity .4s ease}
+  .pg.show .dim{opacity:1}
+  .sheet{
+    position:absolute;left:0;right:0;bottom:0;z-index:46;background:#fff;border-radius:22px 22px 0 0;padding:20px 18px 22px;
+    transform:translateY(100%);transition:transform .5s cubic-bezier(.2,.9,.25,1);box-shadow:0 -16px 40px -20px rgba(0,0,0,.4)
+  }
+  .pg.show .sheet{transform:none}
+  .sheet .chip{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--good);background:var(--good-bg);padding:5px 10px;border-radius:999px;margin-bottom:16px}
+  .ident{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:14px}
+  .ident .av{width:40px;height:40px;border-radius:50%;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+  .ident .nm{font-size:15px;font-weight:700}
+  .ident .em{font-size:12px;color:var(--muted);margin-top:1px}
+  .btnP{margin-top:14px;width:100%;border:0;background:#0a0a0a;color:#fff;font-weight:700;font-size:15px;padding:14px;border-radius:13px;cursor:pointer;letter-spacing:.01em;display:flex;align-items:center;justify-content:center;gap:9px;transition:transform .12s ease, background .2s ease}
+  .btnP:hover{background:#222}
+  .btnP:active{transform:scale(.985)}
+  .btnP .spinner{width:17px;height:17px;border-width:2px}
+  .lnk{display:block;text-align:center;margin-top:12px;font-size:12.5px;color:var(--muted);text-decoration:underline}
+  .sheet .secure{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;font-size:10.5px;color:var(--soft)}
+
+  /* greeting overlay */
+  .hello{position:absolute;inset:0;z-index:55;background:rgba(255,255,255,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px}
+  .check{width:64px;height:64px;border-radius:50%;background:var(--good-bg);display:flex;align-items:center;justify-content:center}
+  .check svg{width:34px;height:34px}
+  .check .pp{stroke:var(--good);stroke-width:3.4;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:30;stroke-dashoffset:30}
+  .pg.show .check .pp{animation:draw .5s .12s forwards ease}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  .hello h3{font-size:21px;font-weight:800;letter-spacing:-.02em}
+  .hello p{font-size:13px;color:var(--muted);max-width:22ch}
+
+  /* signup */
+  .su{padding:48px 20px 20px;display:flex;flex-direction:column;height:100%}
+  .su .pb-logo{width:120px;height:20px;margin:0 auto 26px}
+  .su h3{font-size:20px;font-weight:800;letter-spacing:-.02em;text-align:center}
+  .su .lead{font-size:12.5px;color:var(--muted);text-align:center;margin-top:7px;line-height:1.45}
+  .field{margin-top:22px}
+  .field label{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--soft);text-transform:uppercase}
+  .field .inp{margin-top:7px;border:1.5px solid #111;border-radius:12px;padding:13px 14px;font-size:14px;color:#111;display:flex;align-items:center;gap:8px}
+  .field .inp .cur{width:1.5px;height:17px;background:#111;animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .otp{display:flex;gap:9px;justify-content:center;margin-top:24px}
+  .otp .b{width:38px;height:48px;border:1.5px solid var(--line-2);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#111;transition:border-color .2s ease, transform .2s ease}
+  .otp .b.fill{border-color:#111;transform:translateY(-2px)}
+  .otp-cap{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:18px;font-size:11.5px;color:var(--good);font-weight:600}
+  .otp-cap .d{width:6px;height:6px;border-radius:50%;background:var(--good);animation:pulse2 1.2s infinite}
+  @keyframes pulse2{0%,100%{opacity:.3}50%{opacity:1}}
+  .su .spacer{flex:1}
+
+  /* done + brands */
+  .done{align-items:center;text-align:center;justify-content:flex-start;padding-top:42px}
+  .done .check{width:70px;height:70px;margin-bottom:6px}
+  .done h3{font-size:19px;font-weight:800;letter-spacing:-.02em;margin-top:8px}
+  .done p{font-size:12.5px;color:var(--muted);margin-top:7px;line-height:1.45;max-width:25ch}
+  .brands{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:20px;padding:0 8px}
+  .bchip{font-size:10.5px;font-weight:700;letter-spacing:.03em;border:1px solid var(--line-2);color:#999;border-radius:999px;padding:6px 10px;opacity:.4;filter:grayscale(1);transition:all .35s ease}
+  .bchip.lit{opacity:1;filter:none;color:#111;border-color:#111}
+  .bchip.me{background:#0a0a0a;color:#fff;border-color:#0a0a0a}
+
+  /* phone controls */
+  .controls{display:flex;align-items:center;gap:10px;background:#151517;border:1px solid #2a2a2c;border-radius:999px;padding:7px 8px}
+  .controls button{appearance:none;border:0;background:#26262a;color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .15s ease}
+  .controls button:hover{background:#34343a}
+  .controls button:disabled{opacity:.32;cursor:not-allowed}
+  .controls .play{width:auto;padding:0 16px;gap:8px;background:#fff;color:#0a0a0a;font-weight:700;font-size:13px;border-radius:999px}
+  .controls .play:hover{background:#eaeaea}
+  .dots{display:flex;gap:6px;align-items:center;margin:0 4px}
+  .dots i{width:7px;height:7px;border-radius:50%;background:#3a3a40;transition:all .2s ease}
+  .dots i.on{background:#fff;width:18px;border-radius:4px}
+
+  /* ---------- Info panel ---------- */
+  .info{padding:26px 28px;display:flex;flex-direction:column}
+  .step-no{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+  .info h2{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-top:8px;min-height:30px}
+  .info .detail{font-size:14.5px;color:#333;line-height:1.5;margin-top:8px;min-height:44px}
+  .behind{margin-top:16px;background:var(--bg-soft);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .behind .h{display:flex;align-items:center;gap:8px;font-size:10.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  .behind .h svg{width:14px;height:14px}
+  .behind p{font-size:13px;color:#444;line-height:1.5;margin-top:7px}
+
+  /* meter */
+  .meter{margin-top:18px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .m{border:1px solid var(--line);border-radius:13px;padding:13px 10px;text-align:center;background:#fff}
+  .m.zero{border-color:var(--good);background:var(--good-bg)}
+  .m .v{font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1}
+  .m.zero .v{color:var(--good)}
+  .m .k{font-size:10.5px;color:var(--muted);margin-top:6px;letter-spacing:.02em;font-weight:600}
+  .m.zero .k{color:var(--good)}
+
+  /* compare */
+  .compare{margin-top:18px;border-top:1px dashed var(--line-2);padding-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .cmp{border-radius:13px;padding:13px 14px;border:1px solid var(--line)}
+  .cmp.old{background:var(--bad-bg);border-color:#f3c9c4}
+  .cmp.new{background:var(--good-bg);border-color:#bfe3d1}
+  .cmp .t{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+  .cmp.old .t{color:var(--bad)}
+  .cmp.new .t{color:var(--good)}
+  .cmp .d{font-size:12.5px;color:#333;margin-top:7px;line-height:1.45}
+  .cmp .d b{font-weight:700}
+
+  .footnote{margin-top:18px;font-size:11px;color:var(--soft);letter-spacing:.02em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .footnote .pb-logo{width:60px;height:11px;opacity:.5}
+
+  @media (max-width:880px){
+    .body{grid-template-columns:1fr}
+    .stage{border-right:0;border-bottom:1px solid var(--line)}
+    .meter{grid-template-columns:repeat(2,1fr)}
+    .tab .clk{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="head">
+    <div>
+      <div class="lockup">
+        <span class="pb-logo" role="img" aria-label="Pull&amp;Bear"></span>
+        <span class="bar"></span>
+        <span class="grp">Grupo Inditex</span>
+      </div>
+      <h1>Login &amp; Registro Multitenant</h1>
+      <div class="sub">Una sola identidad para todas las cadenas — prototipo interactivo de la experiencia objetivo.</div>
+    </div>
+    <span class="pill0"><span class="dot"></span>Visión · 0 fricción</span>
+  </div>
+
+  <!-- Card -->
+  <div class="card">
+
+    <!-- Scenario tabs -->
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-flow="signup">
+        <span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></span>
+        <span class="tt">
+          <span class="lvl">Alta</span>
+          <span class="nm">Registro nuevo</span>
+          <span class="clk">Sin contraseña · portable</span>
+        </span>
+      </button>
+      <button class="tab" data-flow="onetap">
+        <span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V6a2 2 0 0 1 4 0v5"/><path d="M13 11V8.5a2 2 0 0 1 4 0V13a6 6 0 0 1-6 6h-1.5a4 4 0 0 1-3.3-1.75L4 14.5a1.8 1.8 0 0 1 2.7-2.3L8 13"/></svg></span>
+        <span class="tt">
+          <span class="lvl">Nivel 1</span>
+          <span class="nm">Un solo toque</span>
+          <span class="clk">Te reconocemos · 1 tap</span>
+        </span>
+      </button>
+      <button class="tab" data-flow="silent">
+        <span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="currentColor" stroke="none"/></svg></span>
+        <span class="tt">
+          <span class="lvl">Nivel 2</span>
+          <span class="nm">Login silencioso</span>
+          <span class="clk">0 clics · ya estás dentro</span>
+        </span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="body">
+
+      <!-- Stage / phone -->
+      <div class="stage">
+        <div class="phone">
+          <div class="screen" id="screen">
+            <div class="notch"></div>
+
+            <!-- SPLASH -->
+            <div class="pg" data-scr="splash">
+              <div class="statusbar dark"><span>9:41</span><span class="ic"><span></span></span></div>
+              <div class="pad splash" style="flex:1;display:flex">
+                <div style="margin:auto;display:flex;flex-direction:column;align-items:center">
+                  <span class="pb-logo" role="img" aria-label="Pull&amp;Bear"></span>
+                  <div class="spinner"></div>
+                  <div class="cap">Conectando con tu cuenta…</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- HOME (silent, with toast) -->
+            <div class="pg" data-scr="home-silent">
+              <div class="statusbar"><span>9:41</span><span class="ic"><span></span></span></div>
+              <div class="toast" id="toast">
+                <div class="tk"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="tt"><b>Sesión iniciada</b> con tu cuenta de Grupo Inditex.<br><a href="#" onclick="return false">¿No eres tú?</a></div>
+              </div>
+              <div class="appbar"><span class="pb-logo" role="img" aria-label="Pull&amp;Bear"></span><div class="avatar">M</div></div>
+              <div class="navrow"><b>Mujer</b><span>Hombre</span><span>Novedades</span><span>Buscar</span></div>
+              <div class="grid">
+                <div class="prod"><div class="ph"></div><div class="l1"></div><div class="l2"></div></div>
+                <div class="prod"><div class="ph"></div><div class="l1"></div><div class="l2"></div></div>
+                <div class="prod"><div class="ph"></div><div class="l1"></div><div class="l2"></div></div>
+                <div class="prod"><div class="ph"></div><div class="l1"></div><div class="l2"></div></div>
+              </div>
+            </div>
+
+            <!-- SHEET (one-tap) -->
+            <div class="pg" data-scr="sheet">
+              <div class="statusbar"><span>9:41</span><span class="ic"><span></span></span></div>
+              <div class="appbar"><span class="pb-logo" role="img" aria-label="Pull&amp;Bear"></span><div class="avatar" style="background:#eee;color:#bbb">?</div></div>
+              <div class="navrow"><b>Mujer</b><span>Hombre</span><span>Novedades</span></div>
+              <div class="grid">
+                <div class="prod"><div class="ph"></div><div class="l1"></div><div class="l2"></div></div>
+                <div class="prod"><div class="ph"></div><div class="l1"></div><div class="l2"></div></div>
+              </div>
+              <div class="dim"></div>
+              <div class="sheet">
+                <span class="chip"><svg width="11" height="11" viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z" fill="none" stroke="#137a4f" stroke-width="2.4"/></svg>Reconocido por Grupo Inditex</span>
+                <div class="ident">
+                  <div class="av">M</div>
+                  <div><div class="nm">María García</div><div class="em">m•••••@gmail.com</div></div>
+                </div>
+                <button class="btnP" id="continueBtn" data-act="next">Continuar como María</button>
+                <a href="#" class="lnk" onclick="return false">Usar otra cuenta</a>
+                <div class="secure"><svg width="11" height="11" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2" fill="none" stroke="#8c8c8c" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" fill="none" stroke="#8c8c8c" stroke-width="2"/></svg>Conexión segura · sin contraseña</div>
+              </div>
+            </div>
+
+            <!-- SHEET loading -->
+            <div class="pg" data-scr="sheet-loading">
+              <div class="statusbar"><span>9:41</span><span class="ic"><span></span></span></div>
+              <div class="appbar"><span class="pb-logo" role="img" aria-label="Pull&amp;Bear"></span><div class="avatar" style="background:#eee;color:#bbb">?</div></div>
+              <div class="navrow"><b>Mujer</b><span>Hombre</span><span>Novedades</span></div>
+              <div class="grid">
+                <div class="prod"><div class="ph"></div><div class="l1"></div><div class="l2"></div></div>
+                <div class="prod"><div class="ph"></div><div class="l1"></div><div class="l2"></div></div>
+              </div>
+              <div class="dim"></div>
+              <div class="sheet">
+                <span class="chip"><svg width="11" height="11" viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z" fill="none" stroke="#137a4f" stroke-width="2.4"/></svg>Reconocido por Grupo Inditex</span>
+                <div class="ident">
+                  <div class="av">M</div>
+                  <div><div class="nm">María García</div><div class="em">m•••••@gmail.com</div></div>
+                </div>
+                <button class="btnP"><div class="spinner"></div> Iniciando sesión…</button>
+                <div class="secure"><svg width="11" height="11" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2" fill="none" stroke="#8c8c8c" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" fill="none" stroke="#8c8c8c" stroke-width="2"/></svg>Conexión segura · sin contraseña</div>
+              </div>
+            </div>
+
+            <!-- WELCOME home -->
+            <div class="pg" data-scr="welcome">
+              <div class="statusbar"><span>9:41</span><span class="ic"><span></span></span></div>
+              <div class="appbar"><span class="pb-logo" role="img" aria-label="Pull&amp;Bear"></span><div class="avatar">M</div></div>
+              <div class="navrow"><b>Mujer</b><span>Hombre</span><span>Novedades</span><span>Buscar</span></div>
+              <div class="grid">
+                <div class="prod"><div class="ph"></div><div class="l1"></div><div class="l2"></div></div>
+                <div class="prod"><div class="ph"></div><div class="l1"></div><div class="l2"></div></div>
+                <div class="prod"><div class="ph"></div><div class="l1"></div><div class="l2"></div></div>
+                <div class="prod"><div class="ph"></div><div class="l1"></div><div class="l2"></div></div>
+              </div>
+              <div class="hello">
+                <div class="check"><svg viewBox="0 0 24 24"><path class="pp" d="M5 13l4 4L19 7"/></svg></div>
+                <h3>¡Hola, María!</h3>
+                <p>Misma cuenta, nueva tienda. Tu perfil ya está aquí.</p>
+              </div>
+            </div>
+
+            <!-- SIGNUP email -->
+            <div class="pg" data-scr="su-email">
+              <div class="statusbar"><span>9:41</span><span class="ic"><span></span></span></div>
+              <div class="su">
+                <span class="pb-logo" role="img" aria-label="Pull&amp;Bear"></span>
+                <h3>Crea tu cuenta</h3>
+                <div class="lead">Una identidad para todo el Grupo Inditex. Solo necesitamos un dato.</div>
+                <div class="field">
+                  <label>Email o móvil</label>
+                  <div class="inp">maria.garcia@gmail.com<span class="cur"></span></div>
+                </div>
+                <div class="spacer"></div>
+                <button class="btnP" data-act="next">Continuar</button>
+                <div class="secure" style="margin-top:14px">Sin contraseña · te enviaremos un código</div>
+              </div>
+            </div>
+
+            <!-- SIGNUP otp -->
+            <div class="pg" data-scr="su-otp">
+              <div class="statusbar"><span>9:41</span><span class="ic"><span></span></span></div>
+              <div class="su">
+                <span class="pb-logo" role="img" aria-label="Pull&amp;Bear"></span>
+                <h3>Introduce el código</h3>
+                <div class="lead">Enviado a maria.garcia@gmail.com</div>
+                <div class="otp" id="otp">
+                  <div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div>
+                </div>
+                <div class="otp-cap"><span class="d"></span>Detectado y autocompletado</div>
+                <div class="spacer"></div>
+                <button class="btnP"><div class="spinner"></div> Verificando…</button>
+              </div>
+            </div>
+
+            <!-- SIGNUP done -->
+            <div class="pg" data-scr="su-done">
+              <div class="statusbar"><span>9:41</span><span class="ic"><span></span></span></div>
+              <div class="su done">
+                <div class="check"><svg viewBox="0 0 24 24"><path class="pp" d="M5 13l4 4L19 7"/></svg></div>
+                <h3>Tu cuenta ya está lista</h3>
+                <p>Una sola identidad que funciona en todas las marcas del Grupo:</p>
+                <div class="brands" id="brands">
+                  <span class="bchip me">Pull&amp;Bear</span>
+                  <span class="bchip">Zara</span>
+                  <span class="bchip">Bershka</span>
+                  <span class="bchip">Stradivarius</span>
+                  <span class="bchip">Oysho</span>
+                  <span class="bchip">Massimo Dutti</span>
+                  <span class="bchip">Zara Home</span>
+                  <span class="bchip">Lefties</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- controls -->
+        <div class="controls">
+          <button id="prev" title="Anterior">&#8592;</button>
+          <div class="dots" id="dots"></div>
+          <button id="next" title="Siguiente">&#8594;</button>
+          <button class="play" id="play"><span id="playIc">&#9654;</span><span id="playTx">Reproducir</span></button>
+        </div>
+      </div>
+
+      <!-- Info panel -->
+      <div class="info">
+        <div class="step-no" id="stepNo">Paso 1</div>
+        <h2 id="title">—</h2>
+        <div class="detail" id="detail">—</div>
+
+        <div class="behind">
+          <div class="h"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#6b6b6b" stroke-width="2"/><path d="M12 8v5M12 16h.01" stroke="#6b6b6b" stroke-width="2" stroke-linecap="round"/></svg>Qué ocurre por detrás</div>
+          <p id="behind">—</p>
+        </div>
+
+        <div class="meter" id="meter">
+          <div class="m"><div class="v" data-k="taps">0</div><div class="k">Toques</div></div>
+          <div class="m"><div class="v" data-k="fields">0</div><div class="k">Campos</div></div>
+          <div class="m"><div class="v" data-k="pass">0</div><div class="k">Contraseñas</div></div>
+          <div class="m"><div class="v" data-k="time">0s</div><div class="k">Tiempo</div></div>
+        </div>
+
+        <div class="compare">
+          <div class="cmp old">
+            <div class="t"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#b42318" stroke-width="2.6" stroke-linecap="round"/></svg>Modelo actual</div>
+            <div class="d"><b>Email + contraseña</b>, repetido en <b>cada marca</b>. ~6 campos por alta.</div>
+          </div>
+          <div class="cmp new">
+            <div class="t"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" fill="none" stroke="#137a4f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Visión multitenant</div>
+            <div class="d">Una identidad, <b>una sola vez</b>. Reutilizable en todo el Grupo, <b>sin volver a registrarse</b>.</div>
+          </div>
+        </div>
+
+        <div class="footnote">
+          <span class="pb-logo" role="img" aria-label="Pull&amp;Bear"></span>
+          <span>· Transparente por diseño: multicadena por defecto; el usuario solo puede rechazar o desvincular.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const FLOWS = {
+  silent: [
+    {scr:'splash', title:'Abres Pull&Bear', detail:'Sin formulario. Sin botón de login. Solo abres la app.',
+      behind:'El dispositivo ya porta un token de identidad del Grupo (SSO). Se valida en segundo plano, sin que el usuario haga nada.',
+      meter:{taps:0,fields:0,pass:0,time:'0s'}, auto:1500},
+    {scr:'home-silent', title:'Ya estás dentro', detail:'La sesión se ha iniciado sola. Cero toques, cero campos.',
+      behind:'Identidad compartida entre cadenas. Transparencia total: aviso visible y opción «¿No eres tú?» para rechazar o cambiar de cuenta en cualquier momento.',
+      meter:{taps:0,fields:0,pass:0,time:'~1s'}, toast:true}
+  ],
+  onetap: [
+    {scr:'sheet', title:'Te reconocemos', detail:'Pull&Bear detecta tu identidad del Grupo y te ofrece entrar con un solo toque.',
+      behind:'Token reutilizable detectado en el dispositivo. No se pide email ni contraseña: solo confirmar.',
+      meter:{taps:0,fields:0,pass:0,time:'~1s'}, click:'#continueBtn'},
+    {scr:'sheet-loading', title:'Un solo toque', detail:'Pulsas «Continuar». No escribes absolutamente nada.',
+      behind:'Se reutiliza la sesión del Grupo Inditex. Nada que recordar, nada que teclear.',
+      meter:{taps:1,fields:0,pass:0,time:'~2s'}, auto:1100},
+    {scr:'welcome', title:'Dentro', detail:'Listo. Misma cuenta, nueva tienda — con tu perfil ya cargado.',
+      behind:'Perfil, direcciones, wallet y preferencias disponibles de inmediato (datos de bajo riesgo). Fidelidad y marketing siguen siendo por marca.',
+      meter:{taps:1,fields:0,pass:0,time:'~2s'}}
+  ],
+  signup: [
+    {scr:'su-email', title:'Primera vez en el Grupo', detail:'Solo te pedimos un dato: tu email o tu móvil.',
+      behind:'Sin contraseña desde el inicio. La identidad nace única y portable, no atada a una sola marca.',
+      meter:{taps:0,fields:1,pass:0,time:'—'}, click:'[data-scr="su-email"] .btnP'},
+    {scr:'su-otp', title:'Código, no contraseña', detail:'Te enviamos un código de un solo uso. Se autocompleta solo.',
+      behind:'OTP en vez de contraseña: menos fricción y más seguridad. Nada que memorizar ni recuperar.',
+      meter:{taps:0,fields:1,pass:0,time:'~8s'}, otp:true, auto:1900},
+    {scr:'su-done', title:'Una cuenta para todo el Grupo', detail:'Tu identidad ya funciona en Zara, Bershka, Oysho y el resto de marcas.',
+      behind:'Multitenant por defecto. El usuario solo puede rechazar o desvincular: nunca tendrá que volver a registrarse en otra cadena.',
+      meter:{taps:0,fields:1,pass:0,time:'~10s'}, brands:true}
+  ]
+};
+
+let flow='signup', idx=0, playing=false, timers=[];
+const $=s=>document.querySelector(s);
+const screen=$('#screen');
+
+function clearTimers(){ timers.forEach(t=>clearTimeout(t)); timers=[]; }
+function showScr(name){
+  screen.querySelectorAll('.pg').forEach(p=>p.classList.toggle('show', p.dataset.scr===name));
+}
+function setMeter(m){
+  document.querySelectorAll('#meter .m').forEach(box=>{
+    const k=box.querySelector('.v').dataset.k, val=m[k];
+    box.querySelector('.v').textContent=val;
+    const isZero=(val===0||val==='0'||val==='0s');
+    box.classList.toggle('zero', isZero);
+  });
+}
+function renderDots(){
+  const d=$('#dots'); d.innerHTML='';
+  FLOWS[flow].forEach((_,i)=>{ const e=document.createElement('i'); if(i===idx)e.classList.add('on'); d.appendChild(e); });
+}
+function fillOtp(){
+  const code=['4','8','2','9','1']; const boxes=document.querySelectorAll('#otp .b');
+  boxes.forEach(b=>{b.textContent='';b.classList.remove('fill');});
+  code.forEach((c,i)=>{ timers.push(setTimeout(()=>{ boxes[i].textContent=c; boxes[i].classList.add('fill'); }, 250+i*230)); });
+}
+function litBrands(){
+  const chips=document.querySelectorAll('#brands .bchip');
+  chips.forEach((c,i)=>{ if(c.classList.contains('me'))return; timers.push(setTimeout(()=>c.classList.add('lit'), 350+i*150)); });
+}
+function fireToast(){
+  const t=$('#toast'); t.classList.remove('in');
+  timers.push(setTimeout(()=>t.classList.add('in'), 350));
+}
+
+function render(){
+  const step=FLOWS[flow][idx];
+  showScr(step.scr);
+  $('#stepNo').textContent='Paso '+(idx+1)+' / '+FLOWS[flow].length;
+  $('#title').textContent=step.title;
+  $('#detail').textContent=step.detail;
+  $('#behind').textContent=step.behind;
+  setMeter(step.meter);
+  renderDots();
+  $('#prev').disabled = idx===0;
+  $('#next').disabled = idx===FLOWS[flow].length-1;
+  if(step.toast) fireToast();
+  if(step.otp) fillOtp();
+  if(step.brands) litBrands();
+  // auto-advance: a step with `auto` is a transient/automatic state (splash, "iniciando sesión", "verificando")
+  // and always advances on its own. Other steps only advance when playing.
+  const last = FLOWS[flow].length-1;
+  const advance = ()=>{ if(idx<last){ idx++; render(); } else { stopPlay(); } };
+  if(step.auto){
+    timers.push(setTimeout(advance, step.auto));
+  } else if(playing){
+    timers.push(setTimeout(advance, 2300));
+  }
+}
+function goFlow(f){
+  clearTimers(); stopPlay(); flow=f; idx=0;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.flow===f));
+  render();
+}
+function startPlay(){ playing=true; $('#playIc').innerHTML='&#10073;&#10073;'; $('#playTx').textContent='Pausa'; if(idx===FLOWS[flow].length-1){idx=0;} clearTimers(); render(); }
+function stopPlay(){ playing=false; $('#playIc').innerHTML='&#9654;'; $('#playTx').textContent='Reproducir'; }
+
+$('#next').onclick=()=>{ clearTimers(); stopPlay(); if(idx<FLOWS[flow].length-1){idx++;render();} };
+$('#prev').onclick=()=>{ clearTimers(); stopPlay(); if(idx>0){idx--;render();} };
+$('#play').onclick=()=>{ if(playing){ clearTimers(); stopPlay(); } else { startPlay(); } };
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>goFlow(t.dataset.flow));
+
+// clicks inside the phone advance the flow (interactive buttons)
+screen.addEventListener('click', e=>{
+  const act=e.target.closest('[data-act="next"]');
+  if(act){ clearTimers(); stopPlay(); if(idx<FLOWS[flow].length-1){idx++;render();} }
+});
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight') $('#next').click();
+  else if(e.key==='ArrowLeft') $('#prev').click();
+  else if(e.key===' '){ e.preventDefault(); $('#play').click(); }
+});
+
+render();
+</script>
+</body>
+</html>
