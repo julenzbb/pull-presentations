@@ -9,3 +9,4 @@
 # Temp / build artifacts
 *.tmp
 *.log
+.vercel
