@@ -5,10 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230a0a0a'/><text x='16' y='23' font-family='Helvetica,Arial,sans-serif' font-size='17' font-weight='700' fill='%23fff' text-anchor='middle'>WM</text></svg>">
-<title>Web Mobile · Origen del tráfico (Pull&Bear) · Sep 2025 – Jun 2026</title>
+<title>Web Mobile vs App iOS · tráfico y comparativa 2025 vs 2026 (Pull&Bear)</title>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 <style>
-/* Zenit Agent Reports — Shared Styles v3.1.0 (Amiga / Sewing IOP DS) — subset */
 :root{
   --bg:#f6f6f6; --surface:#ffffff; --surface2:#ededed;
   --border:#c9c9c9; --border2:#ededed;
@@ -22,14 +21,12 @@
   --status-ok:#238830; --status-missing:#e12d3c; --status-warning:#cd4b00;
   --chart-s1:#1b1b1b; --chart-s2:#454545; --chart-s3:#757575; --chart-s4:#919191; --chart-s5:#adadad; --chart-s6:#c9c9c9;
   --device-web:#1b1b1b; --device-web-mobile:#4a7ab5; --device-app-ios:#3d875e; --device-app-android:#a8692e; --device-unknown:#9e3b3b;
-  --channel-group-paid:#4a7ab5; --channel-group-organic:#3d875e;
   --channel-paid-search:#4a7ab5; --channel-social-paid:#6d4e8c; --channel-display:#2b8585; --channel-affiliates:#7d5570;
   --channel-organic-search:#3d875e; --channel-direct:#1b1b1b; --channel-email:#a8692e; --channel-referral:#757575; --channel-social-organic:#5c5c5c; --channel-none:#919191;
 }
 body.dark{
   --bg:#000000; --surface:#1b1b1b; --surface2:#2e2e2e; --border:#454545; --border2:#2e2e2e;
   --text:#ffffff; --text2:#adadad; --text3:#919191; --text4:#757575;
-  --header-bg:#000000;
   --shadow:rgba(0,0,0,0.40); --shadow-card:0 1px 6px var(--shadow);
   --alert-info-bg:#001c33; --alert-info-border:#3f9fe4; --alert-info-text:#71bdf4;
   --alert-warning-bg:#1f0e00; --alert-warning-border:#f4b271; --alert-warning-text:#fdd9b4;
@@ -38,7 +35,6 @@ body.dark{
   --status-ok:#4fc660; --status-missing:#f75f6c; --status-warning:#f4b271;
   --chart-s1:#ffffff; --chart-s2:#adadad; --chart-s3:#919191; --chart-s4:#757575; --chart-s5:#5c5c5c; --chart-s6:#454545;
   --device-web:#ffffff; --device-web-mobile:#7aabde; --device-app-ios:#6fbc91; --device-app-android:#d49663; --device-unknown:#cf7575;
-  --channel-group-paid:#7aabde; --channel-group-organic:#6fbc91;
   --channel-paid-search:#7aabde; --channel-social-paid:#a885d3; --channel-display:#55b3b3; --channel-affiliates:#b38caa;
   --channel-organic-search:#6fbc91; --channel-direct:#ffffff; --channel-email:#d49663; --channel-referral:#919191; --channel-social-organic:#757575; --channel-none:#5c5c5c;
 }
@@ -75,9 +71,10 @@ tbody tr:hover{background:var(--surface2)}
 .alert-box .alert-icon{font-size:15px;font-weight:700;flex-shrink:0;line-height:1.2}
 .alert-info{background:var(--alert-info-bg);border-left:4px solid var(--alert-info-border);color:var(--alert-info-text)}
 .alert-warning{background:var(--alert-warning-bg);border-left:4px solid var(--alert-warning-border);color:var(--alert-warning-text)}
+.alert-success{background:var(--alert-success-bg);border-left:4px solid var(--alert-success-border);color:var(--alert-success-text)}
 .report-footer{margin-top:32px;padding:20px 0;border-top:1px solid var(--border);font-size:12px;color:var(--text4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text4);margin:8px 2px 12px}
-.dark-toggle{position:fixed;top:16px;right:16px;z-index:1000;padding:6px 14px;border:1px solid var(--border);background:var(--surface);color:var(--text3);border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:500;font-family:inherit;box-shadow:var(--shadow-card);transition:background .2s,color .2s,border-color .2s}
+.dark-toggle{position:fixed;top:16px;right:16px;z-index:1000;padding:6px 14px;border:1px solid var(--border);background:var(--surface);color:var(--text3);border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:500;font-family:inherit;box-shadow:var(--shadow-card)}
 .dark-toggle:hover{background:var(--surface2);color:var(--text)}
 @media (max-width:768px){.report-container{padding:12px}.report-header{padding:20px}.kpi-grid{grid-template-columns:repeat(2,1fr)}.report-meta{flex-direction:column;gap:4px}}
 </style>
@@ -87,98 +84,107 @@ tbody tr:hover{background:var(--surface2)}
 <div class="report-container">
 
   <div class="report-header">
-    <h1>Web Mobile &mdash; Origen del tráfico</h1>
-    <div class="subtitle">Pull&amp;Bear · Web Mobile vs App iOS y fuentes de tráfico · análisis ampliado a 10 meses</div>
+    <h1>Web Mobile vs App iOS &mdash; comparativa 2025 vs 2026</h1>
+    <div class="subtitle">Pull&amp;Bear · ¿es real la caída de iOS y la subida de Web Mobile? · año vs año (Ene&ndash;Jun)</div>
     <div class="report-meta">
-      <span>Sep 2025 &rarr; 22 jun 2026</span>
+      <span>2026: Ene&ndash;22 jun · 2025: Ene&ndash;22 jun (ventanas idénticas)</span>
       <span>Fuente: Zenit · V_FACT_SESSION_DATE_PB</span>
       <span>Sesiones analíticas válidas</span>
     </div>
   </div>
 
-  <div class="alert-box alert-warning">
-    <span class="alert-icon">&#9650;</span>
+  <div class="alert-box alert-success">
+    <span class="alert-icon">&#10003;</span>
     <div>
-      <strong>Matiz importante al ampliar el histórico.</strong> Web Mobile <strong>ya iba por delante de la App iOS en sep&ndash;oct 2025</strong>: no hubo un "cruce en marzo". El liderazgo <strong>oscila con la estacionalidad comercial</strong>: la App iOS se dispara en picos de promoción &mdash; <strong>Black Friday (nov) y sobre todo Rebajas de enero (746 K sesiones/día, +166 K/día sobre web)</strong> &mdash; y luego se desploma (&minus;40% en febrero). Fuera de campaña, Web Mobile manda de forma estable. En términos diarios, Web Mobile está <strong>plana/creciente</strong> (Sep&rarr;May +2%) mientras iOS hace <strong>dientes de sierra</strong>. El crecimiento de Web Mobile en fuentes lo lideran <strong>Direct (+40%)</strong>, Social paid (+16%), SEO (+12%) y Email (+16%).
+      <strong>2025 vs 2026 (Ene&ndash;Jun) confirma la hipótesis: Web Mobile es la única superficie que crece.</strong>
+      <strong>Web Mobile +6,9%</strong> (79,1M vs 74,0M sesiones), positivo casi todos los meses.
+      <strong>App iOS &minus;8,4%</strong> (79,6M vs 86,9M), con caída <strong>consistente &minus;4% a &minus;12% cada mes</strong> &mdash; estructural, no estacional.
+      Y lo demás cae aún más: <strong>Android &minus;15%</strong>, <strong>Web escritorio &minus;17%</strong>.
+      El crecimiento de Web Mobile lo mueve el <strong>tráfico de pago: PAID +19%</strong> (Social paid +46%, Direct +61%); el orgánico (SEO) plano (+6%).
     </div>
   </div>
 
-  <div class="section-label">Resumen ejecutivo · run-rate diario (normaliza meses de distinta duración)</div>
+  <div class="section-label">Resumen ejecutivo · 2026 vs 2025 (Ene–Jun, mismas ventanas)</div>
   <div class="kpi-grid">
     <div class="kpi-card">
-      <div class="kpi-value" style="color:var(--device-web-mobile)">7 / 10</div>
-      <div class="kpi-label">Meses con Web Mobile &gt; iOS</div>
-      <div class="kpi-delta kpi-neutral">iOS lidera solo en nov, ene y feb</div>
+      <div class="kpi-value" style="color:var(--device-web-mobile)">+6,9%</div>
+      <div class="kpi-label">Web Mobile · sesiones YoY</div>
+      <div class="kpi-delta kpi-positive">&uarr; única superficie que crece</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-value" style="color:var(--device-app-ios)">746</div>
-      <div class="kpi-label">Pico iOS · ene 2026 (K sesiones/día)</div>
-      <div class="kpi-delta kpi-negative">&darr; 383 en may (rebajas &rarr; caída)</div>
+      <div class="kpi-value" style="color:var(--device-app-ios)">&minus;8,4%</div>
+      <div class="kpi-label">App iOS · sesiones YoY</div>
+      <div class="kpi-delta kpi-negative">&darr; consistente &minus;4% a &minus;12%/mes</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-value" style="color:var(--device-web-mobile)">+2%</div>
-      <div class="kpi-label">Web Mobile · run-rate Sep&rarr;May</div>
-      <div class="kpi-delta kpi-neutral">estable; iOS &minus;10% y volátil</div>
+      <div class="kpi-value" style="color:var(--device-app-android)">&minus;15%</div>
+      <div class="kpi-label">App Android · YoY</div>
+      <div class="kpi-delta kpi-negative">Web escritorio &minus;17%</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-value">35%</div>
-      <div class="kpi-label">Peso de canales de pago (PAID)</div>
-      <div class="kpi-delta kpi-neutral">65% non-paid · estable</div>
+      <div class="kpi-value" style="color:var(--channel-social-paid)">+19%</div>
+      <div class="kpi-label">Canales PAID · YoY</div>
+      <div class="kpi-delta kpi-positive">Social paid +46% · Direct +61%</div>
     </div>
   </div>
 
-  <div class="section-label">1 · Dispositivo: liderazgo que oscila con la estacionalidad comercial</div>
+  <div class="section-label">1 · Comparativa 2025 vs 2026 por dispositivo</div>
   <div class="chart-container">
-    <div class="chart-title">Sesiones por dispositivo &mdash; media diaria (miles/día)</div>
-    <div class="chart-note">Run-rate diario (junio es parcial: 22 días). Fíjate en el pico de iOS en Black Friday (nov) y Rebajas (ene), y su caída posterior.</div>
-    <div id="chart-1" style="width:100%;height:400px"></div>
+    <div class="chart-title">App iOS vs Web Mobile &mdash; 2026 (sólida) vs 2025 (discontinua) · miles sesiones/día</div>
+    <div class="chart-note">iOS (verde) por debajo de 2025 todos los meses. Web Mobile (azul) por encima de 2025. Jun parcial (22 d) ambos años.</div>
+    <div id="chart-1" style="width:100%;height:420px"></div>
   </div>
   <div class="chart-container">
-    <div class="chart-title">Cuota de sesiones por dispositivo (%)</div>
-    <div class="chart-note">Web Mobile se mantiene en ~40&ndash;45% salvo en los picos de promo de iOS (nov, ene).</div>
-    <div id="chart-2" style="width:100%;height:320px"></div>
-  </div>
-
-  <div class="section-label">2 · Peso de cada fuente en Web Mobile (Sep 2025 – Jun 2026)</div>
-  <div class="chart-container">
-    <div class="chart-title">Peso por fuente de tráfico &mdash; Web Mobile (acumulado 10 meses)</div>
-    <div class="chart-note">Clasificación de marketing channel de Zenit (derivada de UTM + referral).</div>
-    <div id="chart-3" style="width:100%;height:420px"></div>
+    <div class="chart-title">Variación YoY por mes (%) · 2026 vs 2025 &mdash; por dispositivo</div>
+    <div class="chart-note">Solo Web Mobile en verde (positivo). iOS, Android y Web escritorio en negativo todos los meses.</div>
+    <div id="chart-2" style="width:100%;height:340px"></div>
   </div>
   <div class="table-container">
-    <div class="table-title">Peso de cada fuente &mdash; Web Mobile (Sep 2025 – Jun 2026)</div>
+    <div class="table-title">YoY por dispositivo &mdash; sesiones Ene–Jun (mismas ventanas)</div>
     <table>
-      <thead><tr><th>Fuente</th><th>Tipo</th><th class="num">Sesiones</th><th class="num">Peso</th></tr></thead>
-      <tbody id="weights-tbody"></tbody>
-      <tbody><tr style="font-weight:700"><td>TOTAL</td><td></td><td class="num">142.772.915</td><td class="num">100,0%</td></tr></tbody>
+      <thead><tr><th>Dispositivo</th><th class="num">2026 (Ene–Jun)</th><th class="num">2025 (Ene–Jun)</th><th class="num">YoY</th></tr></thead>
+      <tbody>
+        <tr><td><span class="dot" style="background:var(--device-web-mobile)"></span>Web Mobile</td><td class="num">79.113.841</td><td class="num">74.022.007</td><td class="num status-ok">&uarr; +6,9%</td></tr>
+        <tr><td><span class="dot" style="background:var(--device-app-ios)"></span>App iOS</td><td class="num">79.571.381</td><td class="num">86.866.512</td><td class="num status-missing">&darr; &minus;8,4%</td></tr>
+        <tr><td><span class="dot" style="background:var(--device-app-android)"></span>App Android</td><td class="num">20.785.133</td><td class="num">24.453.521</td><td class="num status-missing">&darr; &minus;15,0%</td></tr>
+        <tr><td><span class="dot" style="background:var(--device-web)"></span>Web (escritorio)</td><td class="num">16.505.738</td><td class="num">19.761.864</td><td class="num status-missing">&darr; &minus;16,5%</td></tr>
+      </tbody>
     </table>
   </div>
 
-  <div class="section-label">3 · Curva de cada fuente en el tiempo</div>
+  <div class="section-label">2 · Contexto: curva CY a 10 meses (Sep 2025 – Jun 2026)</div>
   <div class="chart-container">
-    <div class="chart-title">Curva por fuente &mdash; media diaria de sesiones (miles/día)</div>
-    <div class="chart-note">Referral y SEO suben en campaña (BF/rebajas). Direct es el que más crece de forma sostenida.</div>
-    <div id="chart-4" style="width:100%;height:460px"></div>
+    <div class="chart-title">Sesiones por dispositivo &mdash; media diaria (miles/día), últimos 10 meses</div>
+    <div class="chart-note">El liderazgo mensual oscila con la estacionalidad: iOS se dispara en Black Friday (nov) y Rebajas (ene) y luego cae.</div>
+    <div id="chart-3" style="width:100%;height:380px"></div>
+  </div>
+
+  <div class="section-label">3 · Peso de cada fuente en Web Mobile · 2025 vs 2026</div>
+  <div class="chart-container">
+    <div class="chart-title">Peso por fuente &mdash; 2026 vs 2025 (% sobre el total de Web Mobile, Ene–Jun)</div>
+    <div class="chart-note">Sube el peso de Social paid (14%&rarr;19%) y Direct (10%&rarr;15%); baja Referral por ausencia, Email y Newsletter.</div>
+    <div id="chart-4" style="width:100%;height:420px"></div>
   </div>
   <div class="table-container">
-    <div class="table-title">Crecimiento por fuente · Sep 2025 &rarr; May 2026 (run-rate diario)</div>
+    <div class="table-title">Fuentes Web Mobile &mdash; 2026 vs 2025 + YoY (Ene–Jun)</div>
     <table>
-      <thead><tr><th>Fuente</th><th class="num">Sep K/día</th><th class="num">May K/día</th><th class="num">Variación</th></tr></thead>
-      <tbody id="growth-tbody"></tbody>
+      <thead><tr><th>Fuente</th><th class="num">2026 ses.</th><th class="num">2026 %</th><th class="num">2025 %</th><th class="num">YoY</th></tr></thead>
+      <tbody id="src-tbody"></tbody>
+      <tbody><tr style="font-weight:700"><td>TOTAL Web Mobile</td><td class="num">78.970.781</td><td class="num">100%</td><td class="num">100%</td><td class="num status-ok">+6,9%</td></tr></tbody>
     </table>
   </div>
 
   <div class="summary-card">
     <span class="card-icon">&#9679;</span>
     <div class="card-content">
-      <h3>Cómo leerlo</h3>
-      <p>1) La caída de tráfico/descargas de iOS hay que mirarla <strong>en run-rate y contra su propia estacionalidad</strong>: gran parte de lo que parece "bajada" es el desinflado natural tras el pico de Rebajas de enero. 2) Web Mobile no "explota": <strong>se mantiene estructuralmente líder</strong> fuera de campaña y crece despacio, apoyada en Direct, Social paid, SEO y CRM (email/SMS). 3) "Referral por ausencia" (24,5%) son sesiones sin UTM con atribución por defecto &mdash; parte es realmente direct o app&rarr;web, así que conviene tratar ese cubo con cautela.</p>
+      <h3>Conclusión para el caso</h3>
+      <p>1) <strong>La caída de iOS es real y estructural</strong> (&minus;8,4% YoY, uniforme mes a mes), no calendario ni medición. 2) <strong>Web Mobile es la única superficie que crece</strong> (+6,9%); Android (&minus;15%) y escritorio (&minus;17%) caen más que iOS, así que el tráfico se está concentrando en la web móvil. 3) El motor es el <strong>tráfico de pago (PAID +19%, Social paid +46%)</strong> y Direct; el orgánico está plano. Próximo paso recomendable: cruzar con <strong>descargas reales de App Store</strong> y releases iOS para separar "menos uso" de "menos instalaciones", y datar si hubo redirección deliberada de campañas app&rarr;web.</p>
     </div>
   </div>
 
   <div class="report-footer">
-    <span>Fuente: DATAWAREHOUSE_PULL.DIGITAL_DATA_ZENIT_VIEWS.V_FACT_SESSION_DATE_PB · IS_VALID_ANALYTICAL_SESSION = TRUE · ID_DEVICE = 'web-mobile' · marca Pull&amp;Bear (2)</span>
-    <span>Generado: 22 jun 2026 · ventana sep 2025 – jun 2026</span>
+    <span>Fuente: DATAWAREHOUSE_PULL.DIGITAL_DATA_ZENIT_VIEWS.V_FACT_SESSION_DATE_PB · IS_VALID_ANALYTICAL_SESSION = TRUE · marca Pull&amp;Bear (2)</span>
+    <span>Generado: 22 jun 2026 · 2025 vs 2026 (Ene–Jun) + contexto Sep25–Jun26</span>
   </div>
 
 </div>
@@ -186,93 +192,113 @@ tbody tr:hover{background:var(--surface2)}
 <script>
 function getCSSVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
 function fmtN(v){if(v===null||v===undefined||isNaN(v))return '\u2013';return v.toLocaleString('es-ES');}
-function fmtPct(v,d){if(d===undefined)d=1;if(v===null||v===undefined||isNaN(v))return '\u2013';return v.toFixed(d).replace('.',',')+'\u202f%';}
+function fmtPct(v,d){if(d===undefined)d=1;if(v===null||v===undefined||isNaN(v))return '\u2013';return (v>=0?'+':'')+v.toFixed(d).replace('.',',')+'\u202f%';}
+function hexA(hex,a){hex=hex.replace('#','');if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];var r=parseInt(hex.substr(0,2),16),g=parseInt(hex.substr(2,2),16),b=parseInt(hex.substr(4,2),16);return 'rgba('+r+','+g+','+b+','+a+')';}
 var allCharts={};
-function registerChart(id,chart,build){allCharts[id]={chart:chart,build:build};}
+function registerChart(id,c,b){allCharts[id]={chart:c,build:b};}
 function rebuildAllCharts(){Object.keys(allCharts).forEach(function(id){var e=allCharts[id];e.chart.setOption(e.build(),true);});}
 
-var MONTHS=['Sep25','Oct25','Nov25','Dic25','Ene26','Feb26','Mar26','Abr26','May26','Jun26*'];
+/* ===== 2025 vs 2026 (Ene-Jun) ===== */
+var H1=['Ene','Feb','Mar','Abr','May','Jun*'];
+var H1D=[31,28,31,30,31,22];
+var DEV25={
+ 'web-mobile':[16241836,11275335,12184224,12320795,12693291,9306526],
+ 'app-ios':   [25031824,15101325,12761534,12009154,12338760,9623915],
+ 'app-android':[7746078,4705780,3582274,3067671,3091991,2259727],
+ 'web':       [4548190,2972005,3141138,3216016,3449578,2434937]};
+var DEV26={
+ 'web-mobile':[17969114,10848684,12626697,13218311,14027035,10424000],
+ 'app-ios':   [23115799,13317372,11428893,10967259,11873227,8868831],
+ 'app-android':[6864112,3327644,2938266,2563519,2909093,2182499],
+ 'web':       [3974383,2443333,2714291,2604878,2796412,1972441]};
+function d1(a){return a.map(function(x,i){return +(x/H1D[i]/1000).toFixed(1);});}
+
+/* ===== CY 10 meses (contexto) ===== */
+var POS=['Sep','Oct','Nov','Dic','Ene','Feb','Mar','Abr','May','Jun*'];
 var DAYS=[30,31,30,31,31,28,31,30,31,22];
-var DEV={
+var CY={
  'web-mobile':[13325032,15156428,17013306,18412111,17969114,10848684,12626697,13218311,14027035,10424000],
  'app-ios':   [12719241,12987803,17629804,16890930,23115799,13317372,11428893,10967259,11873227,8868831],
  'app-android':[2829748,2818270,4547141,4716495,6864112,3327644,2938266,2563519,2909093,2182499],
- 'web':       [3149949,3484164,4412887,3817618,3974383,2443333,2714291,2604878,2796412,1972441]
-};
-var CH={
- 'Referral (por ausencia)':{v:[3814260,3729507,4505144,4489740,4605244,2620752,2942219,3036711,3083416,2215090],c:'--channel-referral',paid:false},
- 'Organic search (SEO)':   {v:[2535501,2856643,3879979,4340580,4118293,2547985,2844357,2725047,2931198,1965318],c:'--channel-organic-search',paid:false},
- 'Social paid':            {v:[2268495,2274993,2286334,2799555,2937846,1844771,2680828,2564235,2709061,2446318],c:'--channel-social-paid',paid:true},
- 'Paid search (SEM)':      {v:[2250824,2955135,2506133,2606580,2158382,1434099,1637021,1915186,2079402,1351364],c:'--channel-paid-search',paid:true},
- 'Direct':                 {v:[1406564,2055801,2555477,2709407,2803844,1687872,1692369,1957816,2029275,1490940],c:'--channel-direct',paid:false},
- 'Press / affiliation':    {v:[374034,486458,523991,479588,346098,214377,321625,394498,485312,388069],c:'--channel-affiliates',paid:true},
- 'SMS notification':       {v:[310162,375705,423465,545579,593934,310430,283231,348356,369463,314221],c:'--channel-social-organic',paid:false},
- 'Email notification':     {v:[236962,287422,159656,290274,238303,91704,107388,176488,284969,230598],c:'--channel-email',paid:false},
- 'Newsletter':             {v:[101096,114507,144475,122108,138351,79863,95971,75789,22578,2906],c:'--channel-none',paid:false}
-};
-function dailyK(a){return a.map(function(x,i){return +(x/DAYS[i]/1000).toFixed(1);});}
+ 'web':       [3149949,3484164,4412887,3817618,3974383,2443333,2714291,2604878,2796412,1972441]};
+function dk(a){return a.map(function(x,i){return +(x/DAYS[i]/1000).toFixed(1);});}
 function ax(){return {text:getCSSVar('--text3'),line:getCSSVar('--border'),split:getCSSVar('--border2')};}
 
-/* chart 1 — device daily run-rate */
+/* chart 1 — 2025 vs 2026 device (solid vs dashed) */
 (function(){var chart=echarts.init(document.getElementById('chart-1'));
+ function build(){var a=ax();var wm=getCSSVar('--device-web-mobile'),io=getCSSVar('--device-app-ios');
+  return {tooltip:{trigger:'axis',valueFormatter:function(v){return fmtN(v)+' K/día';}},
+   legend:{top:0,textStyle:{color:a.text,fontSize:11}},grid:{left:48,right:18,top:32,bottom:30},
+   xAxis:{type:'category',data:H1,axisLine:{lineStyle:{color:a.line}},axisLabel:{color:a.text}},
+   yAxis:{type:'value',name:'K ses./día',nameTextStyle:{color:a.text,fontSize:10},axisLabel:{color:a.text},splitLine:{lineStyle:{color:a.split}}},
+   series:[
+    {name:'iOS 2026',type:'line',smooth:true,symbol:'circle',symbolSize:7,data:d1(DEV26['app-ios']),itemStyle:{color:io},lineStyle:{width:3}},
+    {name:'iOS 2025',type:'line',smooth:true,symbol:'none',data:d1(DEV25['app-ios']),itemStyle:{color:io},lineStyle:{width:2,type:'dashed',color:hexA(io,0.6)}},
+    {name:'Web Mobile 2026',type:'line',smooth:true,symbol:'circle',symbolSize:7,data:d1(DEV26['web-mobile']),itemStyle:{color:wm},lineStyle:{width:3}},
+    {name:'Web Mobile 2025',type:'line',smooth:true,symbol:'none',data:d1(DEV25['web-mobile']),itemStyle:{color:wm},lineStyle:{width:2,type:'dashed',color:hexA(wm,0.6)}}
+   ]};}
+ chart.setOption(build());registerChart('chart-1',chart,build);window.addEventListener('resize',function(){chart.resize();});})();
+
+/* chart 2 — YoY % by month, all devices */
+(function(){var chart=echarts.init(document.getElementById('chart-2'));
+ function build(){var a=ax();
+  function yoy(d){return H1.map(function(_,i){return +(100*(DEV26[d][i]-DEV25[d][i])/DEV25[d][i]).toFixed(1);});}
+  var defs=[['Web Mobile','web-mobile','--device-web-mobile'],['App iOS','app-ios','--device-app-ios'],['App Android','app-android','--device-app-android'],['Web','web','--device-web']];
+  return {color:defs.map(function(d){return getCSSVar(d[2]);}),
+   tooltip:{trigger:'axis',valueFormatter:function(v){return fmtPct(v);}},
+   legend:{top:0,textStyle:{color:a.text,fontSize:11}},grid:{left:44,right:18,top:32,bottom:30},
+   xAxis:{type:'category',data:H1,axisLine:{lineStyle:{color:a.line}},axisLabel:{color:a.text}},
+   yAxis:{type:'value',axisLabel:{color:a.text,formatter:'{value}%'},splitLine:{lineStyle:{color:a.split}}},
+   series:defs.map(function(d){return {name:d[0],type:'bar',data:yoy(d[1]),itemStyle:{color:getCSSVar(d[2])}};})};}
+ chart.setOption(build());registerChart('chart-2',chart,build);window.addEventListener('resize',function(){chart.resize();});})();
+
+/* chart 3 — CY 10m curve */
+(function(){var chart=echarts.init(document.getElementById('chart-3'));
  function build(){var a=ax();var defs=[['Web Mobile','web-mobile','--device-web-mobile'],['App iOS','app-ios','--device-app-ios'],['App Android','app-android','--device-app-android'],['Web (desktop)','web','--device-web']];
   return {color:defs.map(function(d){return getCSSVar(d[2]);}),
    tooltip:{trigger:'axis',valueFormatter:function(v){return fmtN(v)+' K/día';}},
    legend:{top:0,textStyle:{color:a.text,fontSize:11}},grid:{left:48,right:18,top:30,bottom:30},
-   xAxis:{type:'category',data:MONTHS,axisLine:{lineStyle:{color:a.line}},axisLabel:{color:a.text}},
+   xAxis:{type:'category',data:POS,axisLine:{lineStyle:{color:a.line}},axisLabel:{color:a.text}},
    yAxis:{type:'value',name:'K ses./día',nameTextStyle:{color:a.text,fontSize:10},axisLabel:{color:a.text},splitLine:{lineStyle:{color:a.split}}},
-   series:defs.map(function(d){return {name:d[0],type:'line',smooth:true,symbol:'circle',symbolSize:7,lineStyle:{width:(d[1]==='web-mobile'||d[1]==='app-ios')?3:1.5},data:dailyK(DEV[d[1]]),itemStyle:{color:getCSSVar(d[2])}};})};}
- chart.setOption(build());registerChart('chart-1',chart,build);window.addEventListener('resize',function(){chart.resize();});})();
-
-/* chart 2 — device share */
-(function(){var chart=echarts.init(document.getElementById('chart-2'));
- function build(){var a=ax();var defs=[['Web Mobile','web-mobile','--device-web-mobile'],['App iOS','app-ios','--device-app-ios'],['App Android','app-android','--device-app-android'],['Web (desktop)','web','--device-web']];
-  var tot=MONTHS.map(function(_,i){return defs.reduce(function(s,d){return s+DEV[d[1]][i];},0);});
-  return {color:defs.map(function(d){return getCSSVar(d[2]);}),
-   tooltip:{trigger:'axis',valueFormatter:function(v){return fmtPct(v);}},
-   legend:{top:0,textStyle:{color:a.text,fontSize:11}},grid:{left:40,right:18,top:30,bottom:30},
-   xAxis:{type:'category',data:MONTHS,axisLine:{lineStyle:{color:a.line}},axisLabel:{color:a.text}},
-   yAxis:{type:'value',max:100,axisLabel:{color:a.text,formatter:'{value}%'},splitLine:{lineStyle:{color:a.split}}},
-   series:defs.map(function(d){return {name:d[0],type:'bar',stack:'t',emphasis:{focus:'series'},data:DEV[d[1]].map(function(x,i){return +(100*x/tot[i]).toFixed(1);}),itemStyle:{color:getCSSVar(d[2])}};})};}
- chart.setOption(build());registerChart('chart-2',chart,build);window.addEventListener('resize',function(){chart.resize();});})();
-
-/* chart 3 — source weight (horizontal bar, full window) */
-(function(){var chart=echarts.init(document.getElementById('chart-3'));
- function build(){var a=ax();
-  var rows=Object.keys(CH).map(function(k){return {k:k,s:CH[k].v.reduce(function(x,y){return x+y;},0),c:getCSSVar(CH[k].c)};});
-  rows.sort(function(x,y){return x.s-y.s;});var total=rows.reduce(function(x,y){return x+y.s;},0);
-  return {tooltip:{trigger:'item',formatter:function(p){return p.name+'<br/><b>'+fmtN(p.value)+'</b> ('+fmtPct(100*p.value/total)+')';}},
-   grid:{left:150,right:70,top:10,bottom:24},
-   xAxis:{type:'value',axisLabel:{color:a.text,formatter:function(v){return (v/1e6).toFixed(0)+'M';}},splitLine:{lineStyle:{color:a.split}}},
-   yAxis:{type:'category',data:rows.map(function(r){return r.k;}),axisLine:{lineStyle:{color:a.line}},axisLabel:{color:a.text,fontSize:11}},
-   series:[{type:'bar',barWidth:'62%',data:rows.map(function(r){return {value:r.s,itemStyle:{color:r.c}};}),label:{show:true,position:'right',color:a.text,fontSize:11,formatter:function(p){return fmtPct(100*p.value/total);}}}]};}
+   series:defs.map(function(d){return {name:d[0],type:'line',smooth:true,symbol:'circle',symbolSize:6,lineStyle:{width:(d[1]==='web-mobile'||d[1]==='app-ios')?3:1.5},data:dk(CY[d[1]]),itemStyle:{color:getCSSVar(d[2])}};})};}
  chart.setOption(build());registerChart('chart-3',chart,build);window.addEventListener('resize',function(){chart.resize();});})();
 
-/* chart 4 — source curves */
+/* source 2025 vs 2026 (Ene-Jun totals) */
+var SRC=[
+ {k:'Referral (por ausencia)',y26:18503432,y25:22733618,c:'--channel-referral'},
+ {k:'Organic search (SEO)',y26:17132198,y25:16214438,c:'--channel-organic-search'},
+ {k:'Social paid',y26:15183059,y25:10371692,c:'--channel-social-paid',paid:true},
+ {k:'Direct',y26:11662116,y25:7263235,c:'--channel-direct'},
+ {k:'Paid search (SEM)',y26:10575454,y25:10968888,c:'--channel-paid-search',paid:true},
+ {k:'SMS notification',y26:2219635,y25:1937479,c:'--channel-social-organic'},
+ {k:'Press / affiliation',y26:2149979,y25:2174889,c:'--channel-affiliates',paid:true},
+ {k:'Email notification',y26:1129450,y25:1437485,c:'--channel-email'},
+ {k:'Newsletter',y26:415458,y25:781749,c:'--channel-none'}
+];
+var G26=SRC.reduce(function(s,r){return s+r.y26;},0), G25=SRC.reduce(function(s,r){return s+r.y25;},0);
+
+/* chart 4 — weight 2026 vs 2025 grouped bar */
 (function(){var chart=echarts.init(document.getElementById('chart-4'));
- function build(){var a=ax();var keys=Object.keys(CH);
-  return {color:keys.map(function(k){return getCSSVar(CH[k].c);}),
-   tooltip:{trigger:'axis',valueFormatter:function(v){return fmtN(v)+' K/día';}},
-   legend:{top:0,type:'scroll',textStyle:{color:a.text,fontSize:11}},grid:{left:48,right:18,top:54,bottom:30},
-   xAxis:{type:'category',data:MONTHS,axisLine:{lineStyle:{color:a.line}},axisLabel:{color:a.text}},
-   yAxis:{type:'value',name:'K ses./día',nameTextStyle:{color:a.text,fontSize:10},axisLabel:{color:a.text},splitLine:{lineStyle:{color:a.split}}},
-   series:keys.map(function(k){return {name:k,type:'line',smooth:true,symbol:'circle',symbolSize:6,lineStyle:{width:CH[k].paid?2.6:1.6},data:dailyK(CH[k].v),itemStyle:{color:getCSSVar(CH[k].c)}};})};}
+ function build(){var a=ax();var rows=SRC.slice().sort(function(x,y){return x.y26-y.y26;});
+  return {tooltip:{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v.toFixed(1).replace('.',',')+'%';}},
+   legend:{top:0,textStyle:{color:a.text,fontSize:11}},grid:{left:150,right:50,top:30,bottom:24},
+   xAxis:{type:'value',axisLabel:{color:a.text,formatter:'{value}%'},splitLine:{lineStyle:{color:a.split}}},
+   yAxis:{type:'category',data:rows.map(function(r){return r.k;}),axisLine:{lineStyle:{color:a.line}},axisLabel:{color:a.text,fontSize:11}},
+   series:[
+    {name:'2026 %',type:'bar',data:rows.map(function(r){return +(100*r.y26/G26).toFixed(1);}),itemStyle:{color:getCSSVar('--chart-s1')}},
+    {name:'2025 %',type:'bar',data:rows.map(function(r){return +(100*r.y25/G25).toFixed(1);}),itemStyle:{color:hexA(getCSSVar('--chart-s1'),0.45)}}
+   ]};}
  chart.setOption(build());registerChart('chart-4',chart,build);window.addEventListener('resize',function(){chart.resize();});})();
 
-/* weights table */
-(function(){var rows=Object.keys(CH).map(function(k){return {k:k,s:CH[k].v.reduce(function(x,y){return x+y;},0),c:getCSSVar(CH[k].c),paid:CH[k].paid};});
- var total=rows.reduce(function(x,y){return x+y.s;},0);rows.sort(function(x,y){return y.s-x.s;});
- var tb=document.getElementById('weights-tbody');
- rows.forEach(function(r){var tr=document.createElement('tr');
-  tr.innerHTML='<td><span class="dot" style="background:'+r.c+'"></span>'+r.k+'</td><td>'+(r.paid?'<span class="status-warning">PAID</span>':'<span style="color:var(--text4)">non-paid</span>')+'</td><td class="num">'+fmtN(r.s)+'</td><td class="num">'+fmtPct(100*r.s/total)+'</td>';
-  tb.appendChild(tr);});})();
-
-/* growth table Sep->May daily */
-(function(){var tb=document.getElementById('growth-tbody');
- Object.keys(CH).forEach(function(k){var sep=CH[k].v[0]/30/1000,may=CH[k].v[8]/31/1000;var g=sep?100*(may-sep)/sep:0;
-  var cls=g>=15?'status-ok':(g<=-15?'status-missing':'');var arr=g>=15?'\u2191 ':(g<=-15?'\u2193 ':'');
+/* source table */
+(function(){var tb=document.getElementById('src-tbody');
+ SRC.slice().sort(function(x,y){return y.y26-y.y26===0?0:y.y26-x.y26;}).forEach(function(r){
+  var yoy=100*(r.y26-r.y25)/r.y25;var cls=yoy>=10?'status-ok':(yoy<=-10?'status-missing':'');var arr=yoy>=10?'\u2191 ':(yoy<=-10?'\u2193 ':'');
   var tr=document.createElement('tr');
-  tr.innerHTML='<td><span class="dot" style="background:'+getCSSVar(CH[k].c)+'"></span>'+k+'</td><td class="num">'+sep.toFixed(1).replace('.',',')+'</td><td class="num">'+may.toFixed(1).replace('.',',')+'</td><td class="num '+cls+'">'+arr+(g>=0?'+':'')+g.toFixed(0)+'%</td>';
+  tr.innerHTML='<td><span class="dot" style="background:'+getCSSVar(r.c)+'"></span>'+r.k+(r.paid?' <span class="status-warning" style="font-size:10px">PAID</span>':'')+'</td>'+
+   '<td class="num">'+fmtN(r.y26)+'</td><td class="num">'+(100*r.y26/G26).toFixed(1).replace('.',',')+'%</td>'+
+   '<td class="num">'+(100*r.y25/G25).toFixed(1).replace('.',',')+'%</td>'+
+   '<td class="num '+cls+'">'+arr+fmtPct(yoy,0)+'</td>';
   tb.appendChild(tr);});})();
 </script>
 </body>
