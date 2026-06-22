@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230a0a0a'/><text x='16' y='23' font-family='Helvetica,Arial,sans-serif' font-size='17' font-weight='700' fill='%23fff' text-anchor='middle'>WM</text></svg>">
+<title>Web Mobile · Origen del tráfico (Pull&Bear) · FY2026</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+/* Zenit Agent Reports — Shared Styles v3.1.0 (Amiga / Sewing IOP DS) — subset */
+:root{
+  --bg:#f6f6f6; --surface:#ffffff; --surface2:#ededed;
+  --border:#c9c9c9; --border2:#ededed;
+  --text:#1b1b1b; --text2:#2e2e2e; --text3:#5c5c5c; --text4:#919191;
+  --header-bg:#000000;
+  --shadow:rgba(0,0,0,0.06); --shadow-card:0 1px 3px var(--shadow); --radius:4px;
+  --alert-info-bg:#e5f4ff; --alert-info-border:#2280c3; --alert-info-text:#2280c3;
+  --alert-warning-bg:#fff2e5; --alert-warning-border:#cd4b00; --alert-warning-text:#cd4b00;
+  --alert-error-bg:#ffe5e8; --alert-error-border:#e12d3c; --alert-error-text:#e12d3c;
+  --alert-success-bg:#e2fbe8; --alert-success-border:#238830; --alert-success-text:#238830;
+  --status-ok:#238830; --status-missing:#e12d3c; --status-warning:#cd4b00;
+  /* System 1 — general series */
+  --chart-s1:#1b1b1b; --chart-s2:#454545; --chart-s3:#757575; --chart-s4:#919191; --chart-s5:#adadad; --chart-s6:#c9c9c9;
+  /* System 4 — devices */
+  --device-web:#1b1b1b; --device-web-mobile:#4a7ab5; --device-app-ios:#3d875e; --device-app-android:#a8692e; --device-unknown:#9e3b3b;
+  /* System 5 — marketing channels */
+  --channel-group-paid:#4a7ab5; --channel-group-organic:#3d875e;
+  --channel-paid-search:#4a7ab5; --channel-social-paid:#6d4e8c; --channel-display:#2b8585; --channel-affiliates:#7d5570;
+  --channel-organic-search:#3d875e; --channel-direct:#1b1b1b; --channel-email:#a8692e; --channel-referral:#757575; --channel-social-organic:#5c5c5c; --channel-none:#919191;
+}
+body.dark{
+  --bg:#000000; --surface:#1b1b1b; --surface2:#2e2e2e; --border:#454545; --border2:#2e2e2e;
+  --text:#ffffff; --text2:#adadad; --text3:#919191; --text4:#757575;
+  --header-bg:#000000;
+  --shadow:rgba(0,0,0,0.40); --shadow-card:0 1px 6px var(--shadow);
+  --alert-info-bg:#001c33; --alert-info-border:#3f9fe4; --alert-info-text:#71bdf4;
+  --alert-warning-bg:#1f0e00; --alert-warning-border:#f4b271; --alert-warning-text:#fdd9b4;
+  --alert-error-bg:#200008; --alert-error-border:#f75f6c; --alert-error-text:#fdb4bb;
+  --alert-success-bg:#001a06; --alert-success-border:#4fc660; --alert-success-text:#99efae;
+  --status-ok:#4fc660; --status-missing:#f75f6c; --status-warning:#f4b271;
+  --chart-s1:#ffffff; --chart-s2:#adadad; --chart-s3:#919191; --chart-s4:#757575; --chart-s5:#5c5c5c; --chart-s6:#454545;
+  --device-web:#ffffff; --device-web-mobile:#7aabde; --device-app-ios:#6fbc91; --device-app-android:#d49663; --device-unknown:#cf7575;
+  --channel-group-paid:#7aabde; --channel-group-organic:#6fbc91;
+  --channel-paid-search:#7aabde; --channel-social-paid:#a885d3; --channel-display:#55b3b3; --channel-affiliates:#b38caa;
+  --channel-organic-search:#6fbc91; --channel-direct:#ffffff; --channel-email:#d49663; --channel-referral:#919191; --channel-social-organic:#757575; --channel-none:#5c5c5c;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:var(--text);background:var(--bg);transition:background .2s,color .2s;-webkit-font-smoothing:antialiased}
+.report-container{max-width:1080px;margin:0 auto;padding:24px}
+.report-header{background:var(--header-bg);color:#fff;padding:28px 32px;margin-bottom:24px}
+.report-header h1{font-size:22px;font-weight:700;letter-spacing:-0.01em;margin-bottom:6px}
+.report-header .subtitle{font-size:14px;opacity:.8;margin-bottom:16px}
+.report-meta{display:flex;gap:24px;font-size:12px;opacity:.7;flex-wrap:wrap}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+.kpi-card{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-card);border:1px solid var(--border);text-align:center}
+.kpi-card .kpi-value{font-size:34px;font-weight:700;line-height:1.2}
+.kpi-card .kpi-label{font-size:13px;color:var(--text3);margin-top:4px}
+.kpi-card .kpi-delta{font-size:12px;margin-top:6px;font-weight:600}
+.kpi-positive{color:var(--status-ok)} .kpi-negative{color:var(--status-missing)} .kpi-neutral{color:var(--text3)}
+.summary-card{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-card);border:1px solid var(--border);margin-bottom:24px;display:flex;align-items:flex-start;gap:16px}
+.summary-card .card-icon{font-size:18px;flex-shrink:0;line-height:1}
+.summary-card .card-content h3{font-size:16px;font-weight:600;margin-bottom:4px}
+.summary-card .card-content p{font-size:13px;color:var(--text3)}
+.chart-container{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-card);border:1px solid var(--border);margin-bottom:24px}
+.chart-container .chart-title{font-size:16px;font-weight:600;margin-bottom:4px;color:var(--text)}
+.chart-container .chart-note{font-size:12px;color:var(--text4);margin-bottom:12px}
+.table-container{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-card);border:1px solid var(--border);margin-bottom:24px;overflow-x:auto}
+.table-container .table-title{font-size:16px;font-weight:600;margin-bottom:12px;color:var(--text)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:var(--surface2);padding:8px 12px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text4);border-bottom:1px solid var(--border);white-space:nowrap}
+thead th.num,tbody td.num{text-align:right}
+tbody td{padding:9px 12px;border-bottom:1px solid var(--border2);color:var(--text2);font-size:12px;vertical-align:middle}
+tbody tr:hover{background:var(--surface2)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:7px;vertical-align:middle}
+.status-ok{color:var(--status-ok);font-weight:600} .status-missing{color:var(--status-missing);font-weight:600} .status-warning{color:var(--status-warning);font-weight:600}
+.alert-box{border-radius:var(--radius);padding:14px 16px;margin-bottom:24px;display:flex;align-items:flex-start;gap:12px;font-size:13px}
+.alert-box .alert-icon{font-size:15px;font-weight:700;flex-shrink:0;line-height:1.2}
+.alert-info{background:var(--alert-info-bg);border-left:4px solid var(--alert-info-border);color:var(--alert-info-text)}
+.alert-warning{background:var(--alert-warning-bg);border-left:4px solid var(--alert-warning-border);color:var(--alert-warning-text)}
+.alert-error{background:var(--alert-error-bg);border-left:4px solid var(--alert-error-border);color:var(--alert-error-text)}
+.alert-success{background:var(--alert-success-bg);border-left:4px solid var(--alert-success-border);color:var(--alert-success-text)}
+.report-footer{margin-top:32px;padding:20px 0;border-top:1px solid var(--border);font-size:12px;color:var(--text4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text4);margin:8px 2px 12px}
+.dark-toggle{position:fixed;top:16px;right:16px;z-index:1000;padding:6px 14px;border:1px solid var(--border);background:var(--surface);color:var(--text3);border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:500;font-family:inherit;box-shadow:var(--shadow-card);transition:background .2s,color .2s,border-color .2s}
+.dark-toggle:hover{background:var(--surface2);color:var(--text)}
+@media (max-width:768px){.report-container{padding:12px}.report-header{padding:20px}.kpi-grid{grid-template-columns:repeat(2,1fr)}.report-meta{flex-direction:column;gap:4px}}
+</style>
+</head>
+<body>
+<button class="dark-toggle" onclick="document.body.classList.toggle('dark');this.textContent=document.body.classList.contains('dark')?'Claro':'Oscuro';setTimeout(rebuildAllCharts,60)">Oscuro</button>
+<div class="report-container">
+
+  <div class="report-header">
+    <h1>Web Mobile &mdash; Origen del tráfico</h1>
+    <div class="subtitle">Pull&amp;Bear · ¿de dónde viene el crecimiento de Web Mobile y por qué cae la App iOS?</div>
+    <div class="report-meta">
+      <span>Año fiscal FY2026 · 1 feb &rarr; 22 jun 2026</span>
+      <span>Fuente: Zenit · V_FACT_SESSION_DATE_PB</span>
+      <span>Sesiones analíticas válidas</span>
+    </div>
+  </div>
+
+  <div class="alert-box alert-info">
+    <span class="alert-icon">&rarr;</span>
+    <div>
+      <strong>Conclusión.</strong> Web Mobile adelantó a la App iOS en <strong>marzo 2026</strong> y sigue acelerando (+22% en run-rate diario Feb&rarr;Jun). El crecimiento <strong>no es orgánico</strong>: lo empujan canales de <strong>pago y CRM</strong> redirigidos a web &mdash; Social paid (+33%), Paid search (+31%), Press/affiliation (+104%) y Email (+181%). SEO, Direct y Referral se mantienen planos. La caída de iOS es un <strong>escalón en marzo</strong> (&minus;22% de golpe), lo que apunta a un cambio puntual (release de app o redirección de campañas a web).
+    </div>
+  </div>
+
+  <div class="section-label">Resumen ejecutivo</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-value" style="color:var(--device-web-mobile)">+22%</div>
+      <div class="kpi-label">Web Mobile · run-rate diario</div>
+      <div class="kpi-delta kpi-positive">&uarr; 387 &rarr; 474 K/día (Feb&rarr;Jun)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value" style="color:var(--device-app-ios)">&minus;15%</div>
+      <div class="kpi-label">App iOS · run-rate diario</div>
+      <div class="kpi-delta kpi-negative">&darr; 476 &rarr; 403 K/día (Feb&rarr;Jun)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">Marzo</div>
+      <div class="kpi-label">Mes del cruce Web Mobile &gt; iOS</div>
+      <div class="kpi-delta kpi-neutral">share 36%&rarr;45% vs 44%&rarr;38%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">36%</div>
+      <div class="kpi-label">Peso de canales de pago (PAID)</div>
+      <div class="kpi-delta kpi-neutral">64% non-paid</div>
+    </div>
+  </div>
+
+  <div class="section-label">1 · Dispositivo: iOS cae, Web Mobile la adelanta</div>
+  <div class="chart-container">
+    <div class="chart-title">Sesiones por dispositivo &mdash; media diaria (miles/día)</div>
+    <div class="chart-note">Run-rate diario para comparar de forma justa (junio es parcial: 22 días). El cruce ocurre en marzo.</div>
+    <div id="chart-1" style="width:100%;height:380px"></div>
+  </div>
+  <div class="chart-container">
+    <div class="chart-title">Cuota de sesiones por dispositivo (%)</div>
+    <div class="chart-note">Sobre los 4 dispositivos principales. Web Mobile pasa de 36% a ~45%; iOS de 44% a ~38%.</div>
+    <div id="chart-2" style="width:100%;height:300px"></div>
+  </div>
+
+  <div class="section-label">2 · Peso de cada fuente en Web Mobile</div>
+  <div class="chart-container">
+    <div class="chart-title">Peso por fuente de tráfico &mdash; Web Mobile (Feb&ndash;May, meses completos)</div>
+    <div class="chart-note">Clasificación de marketing channel de Zenit (derivada de UTM + referral).</div>
+    <div id="chart-3" style="width:100%;height:420px"></div>
+  </div>
+
+  <div class="table-container">
+    <div class="table-title">Peso de cada fuente &mdash; Web Mobile (Feb&ndash;May 2026)</div>
+    <table>
+      <thead><tr><th>Fuente</th><th>Tipo</th><th class="num">Sesiones</th><th class="num">Peso</th></tr></thead>
+      <tbody id="weights-tbody"></tbody>
+      <tbody>
+        <tr style="font-weight:700"><td>TOTAL</td><td></td><td class="num">50.720.727</td><td class="num">100,0%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-label">3 · Curva de cada fuente en el tiempo</div>
+  <div class="chart-container">
+    <div class="chart-title">Curva por fuente &mdash; media diaria de sesiones (miles/día)</div>
+    <div class="chart-note">Donde está el cambio: los canales de pago/CRM despegan; los orgánicos van planos.</div>
+    <div id="chart-4" style="width:100%;height:440px"></div>
+  </div>
+
+  <div class="table-container">
+    <div class="table-title">Crecimiento por fuente · Feb &rarr; May (run-rate diario, meses completos)</div>
+    <table>
+      <thead><tr><th>Fuente</th><th class="num">Feb K/día</th><th class="num">May K/día</th><th class="num">Variación</th></tr></thead>
+      <tbody id="growth-tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="summary-card">
+    <span class="card-icon">&#9679;</span>
+    <div class="card-content">
+      <h3>Para cerrar el "¿hicimos algún cambio?"</h3>
+      <p>Lo confirmaría mirando el detalle UTM crudo (SOURCE / MEDIUM / CAMPAIGN) de social_paid y email en la semana del cambio de marzo, y revisando si en esas fechas hubo un release de la app iOS. "Referral por ausencia" (23%) son sesiones sin UTM a las que el modelo asigna referral por defecto: conviene tenerlo presente porque parte de ese tráfico es realmente direct o app&rarr;web y "ensucia" la atribución.</p>
+    </div>
+  </div>
+
+  <div class="report-footer">
+    <span>Fuente: DATAWAREHOUSE_PULL.DIGITAL_DATA_ZENIT_VIEWS.V_FACT_SESSION_DATE_PB · IS_VALID_ANALYTICAL_SESSION = TRUE · ID_DEVICE = 'web-mobile' · marca Pull&amp;Bear (2)</span>
+    <span>Generado: 22 jun 2026</span>
+  </div>
+
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+function getCSSVar(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim();}
+function fmtN(v){if(v===null||v===undefined||isNaN(v))return '\u2013';return v.toLocaleString('es-ES');}
+function fmtPct(v,d){if(d===undefined)d=1;if(v===null||v===undefined||isNaN(v))return '\u2013';return v.toFixed(d).replace('.',',')+'\u202f%';}
+var allCharts={};
+function registerChart(id,chart,build){allCharts[id]={chart:chart,build:build};}
+function rebuildAllCharts(){Object.keys(allCharts).forEach(function(id){var e=allCharts[id];e.chart.setOption(e.build(),true);});}
+
+/* ---------- data ---------- */
+var MONTHS=['Feb','Mar','Abr','May','Jun*'];
+var DAYS=[28,31,30,31,22];
+// device monthly sessions (valid analytical)
+var DEV={
+  'web-mobile':[10848684,12626697,13218311,14027035,10424000],
+  'app-ios':   [13317372,11428893,10967259,11873227,8868831],
+  'app-android':[3327644,2938266,2563519,2909093,2182499],
+  'web':       [2443333,2714291,2604878,2796412,1972441]
+};
+// web-mobile sessions by marketing channel, monthly
+var CH={
+  'Referral (por ausencia)':{v:[2620752,2942219,3036711,3083416,2215090],c:'--channel-referral',paid:false},
+  'Organic search (SEO)':   {v:[2547985,2844357,2725047,2931198,1965318],c:'--channel-organic-search',paid:false},
+  'Social paid':            {v:[1844771,2680828,2564235,2709061,2446318],c:'--channel-social-paid',paid:true},
+  'Direct':                 {v:[1687872,1692369,1957816,2029275,1490940],c:'--channel-direct',paid:false},
+  'Paid search (SEM)':      {v:[1434099,1637021,1915186,2079402,1351364],c:'--channel-paid-search',paid:true},
+  'Press / affiliation':    {v:[214377,321625,394498,485312,388069],c:'--channel-affiliates',paid:true},
+  'SMS notification':       {v:[310430,283231,348356,369463,314221],c:'--channel-social-organic',paid:false},
+  'Email notification':     {v:[91704,107388,176488,284969,230598],c:'--channel-email',paid:false},
+  'Newsletter':             {v:[79863,95971,75789,22578,2906],c:'--channel-none',paid:false}
+};
+
+function dailyK(arr){return arr.map(function(x,i){return +(x/DAYS[i]/1000).toFixed(1);});}
+function axisColors(){return {text:getCSSVar('--text3'),line:getCSSVar('--border'),split:getCSSVar('--border2')};}
+function baseGrid(){return {left:48,right:18,top:30,bottom:54};}
+
+/* ---------- chart 1: device daily run-rate (lines) ---------- */
+(function(){
+  var el=document.getElementById('chart-1');var chart=echarts.init(el);
+  function build(){
+    var ac=axisColors();
+    var defs=[['Web Mobile','web-mobile','--device-web-mobile'],['App iOS','app-ios','--device-app-ios'],['App Android','app-android','--device-app-android'],['Web (desktop)','web','--device-web']];
+    var series=defs.map(function(d){return {name:d[0],type:'line',smooth:true,symbol:'circle',symbolSize:7,lineStyle:{width:d[1]==='web-mobile'||d[1]==='app-ios'?3:1.5},data:dailyK(DEV[d[1]]),itemStyle:{color:getCSSVar(d[2])}};});
+    return {color:defs.map(function(d){return getCSSVar(d[2]);}),
+      tooltip:{trigger:'axis',valueFormatter:function(v){return fmtN(v)+' K/día';}},
+      legend:{top:0,textStyle:{color:ac.text,fontSize:11}},
+      grid:baseGrid(),
+      xAxis:{type:'category',data:MONTHS,axisLine:{lineStyle:{color:ac.line}},axisLabel:{color:ac.text}},
+      yAxis:{type:'value',name:'K sesiones/día',nameTextStyle:{color:ac.text,fontSize:10},axisLabel:{color:ac.text},splitLine:{lineStyle:{color:ac.split}}},
+      series:series};
+  }
+  chart.setOption(build());registerChart('chart-1',chart,build);
+  window.addEventListener('resize',function(){chart.resize();});
+})();
+
+/* ---------- chart 2: device share (100% stacked) ---------- */
+(function(){
+  var el=document.getElementById('chart-2');var chart=echarts.init(el);
+  function build(){
+    var ac=axisColors();
+    var defs=[['Web Mobile','web-mobile','--device-web-mobile'],['App iOS','app-ios','--device-app-ios'],['App Android','app-android','--device-app-android'],['Web (desktop)','web','--device-web']];
+    var tot=MONTHS.map(function(_,i){return defs.reduce(function(s,d){return s+DEV[d[1]][i];},0);});
+    var series=defs.map(function(d){return {name:d[0],type:'bar',stack:'t',emphasis:{focus:'series'},data:DEV[d[1]].map(function(x,i){return +(100*x/tot[i]).toFixed(1);}),itemStyle:{color:getCSSVar(d[2])}};});
+    return {color:defs.map(function(d){return getCSSVar(d[2]);}),
+      tooltip:{trigger:'axis',valueFormatter:function(v){return fmtPct(v);}},
+      legend:{top:0,textStyle:{color:ac.text,fontSize:11}},
+      grid:baseGrid(),
+      xAxis:{type:'category',data:MONTHS,axisLine:{lineStyle:{color:ac.line}},axisLabel:{color:ac.text}},
+      yAxis:{type:'value',max:100,axisLabel:{color:ac.text,formatter:'{value}%'},splitLine:{lineStyle:{color:ac.split}}},
+      series:series};
+  }
+  chart.setOption(build());registerChart('chart-2',chart,build);
+  window.addEventListener('resize',function(){chart.resize();});
+})();
+
+/* ---------- chart 3: source weight (horizontal bar, Feb-May) ---------- */
+(function(){
+  var el=document.getElementById('chart-3');var chart=echarts.init(el);
+  function build(){
+    var ac=axisColors();
+    var rows=Object.keys(CH).map(function(k){var s=CH[k].v.slice(0,4).reduce(function(a,b){return a+b;},0);return {k:k,s:s,c:getCSSVar(CH[k].c)};});
+    rows.sort(function(a,b){return a.s-b.s;});
+    var total=rows.reduce(function(a,b){return a+b.s;},0);
+    return {
+      tooltip:{trigger:'item',formatter:function(p){return p.name+'<br/><b>'+fmtN(p.value)+'</b> ('+fmtPct(100*p.value/total)+')';}},
+      grid:{left:150,right:70,top:10,bottom:24},
+      xAxis:{type:'value',axisLabel:{color:ac.text,formatter:function(v){return (v/1e6).toFixed(0)+'M';}},splitLine:{lineStyle:{color:ac.split}}},
+      yAxis:{type:'category',data:rows.map(function(r){return r.k;}),axisLine:{lineStyle:{color:ac.line}},axisLabel:{color:ac.text,fontSize:11}},
+      series:[{type:'bar',data:rows.map(function(r){return {value:r.s,itemStyle:{color:r.c}};}),barWidth:'62%',
+        label:{show:true,position:'right',color:ac.text,fontSize:11,formatter:function(p){return fmtPct(100*p.value/total);}}}]
+    };
+  }
+  chart.setOption(build());registerChart('chart-3',chart,build);
+  window.addEventListener('resize',function(){chart.resize();});
+})();
+
+/* ---------- chart 4: source curves (daily run-rate lines) ---------- */
+(function(){
+  var el=document.getElementById('chart-4');var chart=echarts.init(el);
+  function build(){
+    var ac=axisColors();
+    var keys=Object.keys(CH);
+    var series=keys.map(function(k){return {name:k,type:'line',smooth:true,symbol:'circle',symbolSize:6,lineStyle:{width:CH[k].paid?2.6:1.6,type:CH[k].paid?'solid':'solid'},data:dailyK(CH[k].v),itemStyle:{color:getCSSVar(CH[k].c)}};});
+    return {color:keys.map(function(k){return getCSSVar(CH[k].c);}),
+      tooltip:{trigger:'axis',valueFormatter:function(v){return fmtN(v)+' K/día';}},
+      legend:{top:0,type:'scroll',textStyle:{color:ac.text,fontSize:11}},
+      grid:{left:48,right:18,top:54,bottom:40},
+      xAxis:{type:'category',data:MONTHS,axisLine:{lineStyle:{color:ac.line}},axisLabel:{color:ac.text}},
+      yAxis:{type:'value',name:'K sesiones/día',nameTextStyle:{color:ac.text,fontSize:10},axisLabel:{color:ac.text},splitLine:{lineStyle:{color:ac.split}}},
+      series:series};
+  }
+  chart.setOption(build());registerChart('chart-4',chart,build);
+  window.addEventListener('resize',function(){chart.resize();});
+})();
+
+/* ---------- weights table ---------- */
+(function(){
+  var rows=Object.keys(CH).map(function(k){var s=CH[k].v.slice(0,4).reduce(function(a,b){return a+b;},0);return {k:k,s:s,c:getCSSVar(CH[k].c),paid:CH[k].paid};});
+  var total=rows.reduce(function(a,b){return a+b.s;},0);
+  rows.sort(function(a,b){return b.s-a.s;});
+  var tb=document.getElementById('weights-tbody');
+  rows.forEach(function(r){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><span class="dot" style="background:'+r.c+'"></span>'+r.k+'</td>'+
+      '<td>'+(r.paid?'<span class="status-warning">PAID</span>':'<span style="color:var(--text4)">non-paid</span>')+'</td>'+
+      '<td class="num">'+fmtN(r.s)+'</td>'+
+      '<td class="num">'+fmtPct(100*r.s/total)+'</td>';
+    tb.appendChild(tr);
+  });
+})();
+
+/* ---------- growth table (Feb->May daily) ---------- */
+(function(){
+  var tb=document.getElementById('growth-tbody');
+  var keys=Object.keys(CH);
+  keys.forEach(function(k){
+    var feb=CH[k].v[0]/28/1000, may=CH[k].v[3]/31/1000;
+    var g=feb?100*(may-feb)/feb:0;
+    var cls=g>=15?'status-ok':(g<=-15?'status-missing':'');
+    var arrow=g>=15?'\u2191 ':(g<=-15?'\u2193 ':'');
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><span class="dot" style="background:'+getCSSVar(CH[k].c)+'"></span>'+k+'</td>'+
+      '<td class="num">'+feb.toFixed(1).replace('.',',')+'</td>'+
+      '<td class="num">'+may.toFixed(1).replace('.',',')+'</td>'+
+      '<td class="num '+cls+'">'+arrow+(g>=0?'+':'')+g.toFixed(0)+'%</td>';
+    tb.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>
