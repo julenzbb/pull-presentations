@@ -331,8 +331,8 @@ tbody td strong{color:var(--text);}
   </div>
 
   <div class="chart-container">
-    <div class="chart-title">Funnel de conversión · Alemania · Feb&ndash;May 2025 vs 2026</div>
-    <div class="chart-sub">Tasas de paso entre escalones. El único paso que empeora es Sesión&rarr;Ver producto (&minus;2,5pp); el resto mejora.</div>
+    <div class="chart-title">Tasas de paso del funnel · Alemania · Feb&ndash;May 2025 vs 2026</div>
+    <div class="chart-sub">% que avanza de un escalón al siguiente. Casi todos los pasos mejoran en 2026 (solo Sesión&rarr;Producto baja &minus;2,5pp). Nota: en volumen absoluto todo el embudo es menor en 2026 por el &minus;16% de tráfico; aquí se mide eficiencia (%), no volumen.</div>
     <div id="chart-7" style="width:100%;height:360px;"></div>
   </div>
 
@@ -624,23 +624,23 @@ function rebuildAllCharts(){allCharts.forEach(function(o){o.chart.setOption(o.bu
   window.addEventListener('resize',function(){chart.resize();});
 })();
 
-// CHART 7 — funnel de conversión 2025 vs 2026
+// CHART 7 — tasas de paso del funnel 2025 vs 2026
 (function(){
   var chart=echarts.init(document.getElementById('chart-7'));
-  var steps=['Sesiones','Ven producto','Añaden carrito','Checkout','Pedido'];
-  var f2025=[9339495,6330007,1315326,701342,246420];
-  var f2026=[7825937,5107166,1092234,613998,238914];
+  var steps=['Sesión→Producto','Producto→Carrito','Carrito→Checkout','Checkout→Pedido'];
+  var r2025=[67.8,20.8,53.3,35.1];
+  var r2026=[65.3,21.4,56.2,37.5];
   function buildOption(){
     var text=getCSSVar('--text3'),grid=getCSSVar('--border2'),c5=getCSSVar('--chart-s5'),c1=getCSSVar('--chart-s1');
     return {
-      tooltip:{trigger:'axis',valueFormatter:function(v){return fmtN(v);}},
+      tooltip:{trigger:'axis',valueFormatter:function(v){return fmtPct(v,1);}},
       legend:{data:['2025','2026'],textStyle:{color:text},top:0},
       grid:{left:8,right:16,top:32,bottom:8,containLabel:true},
-      xAxis:{type:'category',data:steps,axisLabel:{color:text,interval:0},axisLine:{lineStyle:{color:grid}}},
-      yAxis:{type:'value',axisLabel:{color:text,formatter:function(v){return fmtN(v);}},splitLine:{lineStyle:{color:grid}}},
+      xAxis:{type:'category',data:steps,axisLabel:{color:text,interval:0,fontSize:10},axisLine:{lineStyle:{color:grid}}},
+      yAxis:{type:'value',axisLabel:{color:text,formatter:function(v){return v+'%';}},splitLine:{lineStyle:{color:grid}}},
       series:[
-        {name:'2025',type:'bar',data:f2025,itemStyle:{color:c5},barMaxWidth:34},
-        {name:'2026',type:'bar',data:f2026,itemStyle:{color:c1},barMaxWidth:34}
+        {name:'2025',type:'bar',data:r2025,itemStyle:{color:c5},barMaxWidth:34,label:{show:true,position:'top',color:text,fontSize:10,formatter:function(p){return fmtPct(p.value,1);}}},
+        {name:'2026',type:'bar',data:r2026,itemStyle:{color:c1},barMaxWidth:34,label:{show:true,position:'top',color:text,fontSize:10,formatter:function(p){return fmtPct(p.value,1);}}}
       ]
     };
   }
