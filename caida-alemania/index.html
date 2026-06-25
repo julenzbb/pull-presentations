@@ -432,7 +432,7 @@ tbody td strong{color:var(--text);}
       <ul class="hyp-list">
         <li>
           <span class="hyp-rank">1</span>
-          <span class="hyp-body"><strong>Caída de un partner de afiliación / acuerdo de prensa alemán.</strong> Afiliación/prensa &minus;61% en DE vs +24% en FR. Es la señal más fuerte y específica. Lo más probable es que un partner o red de afiliación que enviaba mucho tráfico se cayera, cancelara o cambiara condiciones en febrero. <span class="tag tag-action">Acción: Marketing / Afiliación DE</span><br><em>Pregunta concreta: ¿qué partner(s) de afiliación o cupones de DE se perdieron o cambiaron entre el 2 y el 12 de febrero?</em></span>
+          <span class="hyp-body"><strong>Caída de un partner de afiliación (sospechoso nº1: Tradedoubler).</strong> Afiliación/prensa &minus;61% en DE vs +24% en FR. El partner dominante de afiliación de Pull&amp;Bear Alemania es <strong>Tradedoubler</strong> (red de afiliación), que concentra ~90% del canal (~55&ndash;63K sesiones/mes). Es el principal candidato a haber caído, cancelado o cambiado condiciones en torno al 9&ndash;12 de febrero. <span class="tag tag-action">Acción: Marketing / Afiliación DE</span><br><em>Caveat de datos: GA4 con detalle de fuente solo llega hasta el 5-feb (justo antes del quiebre) y en Zenit el campo source está vacío, así que no se puede confirmar el colapso por dato; hasta el 5-feb Tradedoubler estaba sano. Verificar con el equipo de afiliación / panel de Tradedoubler qué pasó del 6 al 12 de febrero.</em></span>
         </li>
         <li>
           <span class="hyp-rank">2</span>
@@ -444,7 +444,7 @@ tbody td strong{color:var(--text);}
         </li>
         <li>
           <span class="hyp-rank">4</span>
-          <span class="hyp-body"><strong>Producto / surtido / precio / stock (siguiente análisis, aún por confirmar).</strong> La conversión por canal está bien, pero conviene revisar si el catálogo, el atractivo de las colecciones, el precio o las roturas de stock en Alemania han cambiado y contribuyen a la caída de demanda. Requiere bajar a detalle de producto/categoría (ticket medio, unidades por pedido, disponibilidad, devoluciones). <span class="tag tag-action">Acción: Comercial / Producto DE</span></span>
+          <span class="hyp-body"><strong>Producto / surtido / precio (analizado &mdash; DESCARTADO como causa).</strong> En el site propio, Ropa (&minus;12,6%) y Calzado (&minus;11,5%) caen casi igual y mantienen <strong>cuota idéntica</strong> (94,1% / 5,9%) YoY: ninguna familia pierde peso, todas caen proporcional al tráfico. Es decir, las prendas se venden igual de bien, solo que a menos gente. <span class="tag tag-action">Cerrado</span><br><em>Limitación: el detalle fino de prenda (camisetas, vaqueros…) no es comparable YoY con las vistas disponibles; el análisis se hizo a nivel Ropa/Calzado y sección Mujer/Hombre.</em></span>
         </li>
       </ul>
     </div>
@@ -454,12 +454,12 @@ tbody td strong{color:var(--text);}
     <span class="alert-icon">&#10003;</span>
     <div>
       <strong>Lo que SÍ podemos descartar con los datos:</strong>
-      <p>&#10003; No es un bug de checkout ni de método de pago (el tramo bajo del funnel mejora). &nbsp; &#10003; No es la conversión (la CVR sube). &nbsp; &#10003; No es recorte de inversión paid (sube). &nbsp; &#10003; No es la app ni una plataforma concreta (cae web, móvil, iOS y Android a la vez). &nbsp; &#10003; No es estacional / calendario de rebajas (la caída está en pleno periodo full-price). &nbsp; &#10003; No es global de Pull&amp;Bear (el resto de mercados están sanos).</p>
+      <p>&#10003; No es un bug de checkout ni de método de pago (el tramo bajo del funnel mejora). &nbsp; &#10003; No es la conversión (la CVR sube). &nbsp; &#10003; No es el producto/surtido (Ropa y Calzado caen igual y mantienen cuota). &nbsp; &#10003; No es recorte de inversión paid (sube). &nbsp; &#10003; No es la app ni una plataforma concreta (cae web, móvil, iOS y Android a la vez). &nbsp; &#10003; No es estacional / calendario de rebajas (la caída está en pleno periodo full-price). &nbsp; &#10003; No es global de Pull&amp;Bear (el resto de mercados están sanos).</p>
     </div>
   </div>
 
   <div class="report-footer">
-    <span>Fuentes: Zenit · DIGITAL_DATA_ZENIT (V_FACT_ECOMMERCE_FUNNEL_AGG_PB, V_FACT_SESSION_DATE_PB) · pedidos V_FACT_PEDIDOS_AGRUP_FECHA_MERCADO · venta V_FACT_VENTAS_ECOMMERCE · Mercado DE = ID 4</span>
+    <span>Fuentes: Zenit · DIGITAL_DATA_ZENIT (V_FACT_ECOMMERCE_FUNNEL_AGG_PB, V_FACT_SESSION_DATE_PB) · pedidos V_FACT_PEDIDOS_AGRUP_FECHA_MERCADO · venta V_FACT_VENTAS_ECOMMERCE · fuentes GA4 V_BIGQUERY_GA4_PULL_..._ATTRIBUTION · Mercado DE = ID 4</span>
     <span>Pull&amp;Bear eCommerce &mdash; Análisis YoY 2026 vs 2025</span>
   </div>
 
