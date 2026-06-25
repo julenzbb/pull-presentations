@@ -320,19 +320,42 @@ tbody td strong{color:var(--text);}
   <hr class="section-divider">
 
   <!-- 5. CONVERSIÓN -->
-  <div class="section-title">5 &middot; Conversión: no es el problema (de hecho mejora)</div>
+  <div class="section-title">5 &middot; Conversión: el embudo cae en volumen (como el corporativo), pero la eficiencia mejora</div>
 
   <div class="alert-box alert-success">
     <span class="alert-icon">&#10003;</span>
     <div>
-      <strong>La conversión sube. Los pedidos caen por el tráfico, no por la conversión.</strong>
-      <p>Pedidos = Sesiones &times; CVR. Las sesiones caen &minus;16% y la CVR sube, pero la subida no compensa la pérdida de tráfico &rarr; pedidos &minus;14%. El tramo bajo del funnel (carrito, checkout, pago) <strong>mejora</strong>, lo que descarta cualquier bug de checkout o de método de pago.</p>
+      <strong>El embudo cae en TODOS los pasos vs A-1 (en volumen) &mdash; pero no por la conversión, sino por el tráfico.</strong>
+      <p>En volumen, cada escalón del funnel cae vs año anterior (&minus;16% sesiones &hellip; &minus;7% pedidos), igual que en el reporting corporativo. La causa NO es que la web convierta peor: las <strong>tasas de paso de hecho mejoran</strong> (carrito, checkout y pago suben). Es matemática de embudo: <em>Pedidos = Sesiones &times; CVR</em>; con &minus;16% de entrada, todo el embudo encoge aunque la eficiencia suba. Esto descarta un bug de checkout o de pago.</p>
     </div>
   </div>
 
   <div class="chart-container">
-    <div class="chart-title">Tasas de paso del funnel · Alemania · Feb&ndash;May 2025 vs 2026</div>
-    <div class="chart-sub">% que avanza de un escalón al siguiente. Casi todos los pasos mejoran en 2026 (solo Sesión&rarr;Producto baja &minus;2,5pp). Nota: en volumen absoluto todo el embudo es menor en 2026 por el &minus;16% de tráfico; aquí se mide eficiencia (%), no volumen.</div>
+    <div class="chart-title">Volumen del funnel vs A-1 · Alemania · Feb&ndash;May (cuadra con reporting corporativo)</div>
+    <div class="chart-sub">Nº de sesiones/eventos en cada escalón. Todo el embudo cae vs año anterior por la pérdida de tráfico de entrada.</div>
+    <div id="chart-9" style="width:100%;height:340px;"></div>
+  </div>
+
+  <div class="table-container">
+    <div class="table-title">Volumen por paso del funnel · Alemania · Feb&ndash;May (vs A-1)</div>
+    <div class="table-sub">Esta es la lectura que coincide con los informes corporativos: caída en todos los pasos respecto al año anterior.</div>
+    <table>
+      <thead>
+        <tr><th>Paso del funnel</th><th class="num">2025</th><th class="num">2026</th><th class="num">vs A-1</th></tr>
+      </thead>
+      <tbody>
+        <tr class="row-highlight"><td><strong>Sesiones</strong></td><td class="num">9.339.495</td><td class="num">7.825.937</td><td class="num status-missing">&minus;16,2%</td></tr>
+        <tr class="row-highlight"><td><strong>Ven producto</strong></td><td class="num">6.330.007</td><td class="num">5.107.166</td><td class="num status-missing">&minus;19,3%</td></tr>
+        <tr class="row-highlight"><td><strong>Añaden al carrito</strong></td><td class="num">1.315.326</td><td class="num">1.092.234</td><td class="num status-missing">&minus;17,0%</td></tr>
+        <tr class="row-highlight"><td><strong>Checkout</strong></td><td class="num">701.342</td><td class="num">613.998</td><td class="num status-missing">&minus;12,5%</td></tr>
+        <tr class="row-highlight"><td><strong>Pedidos</strong></td><td class="num">246.420</td><td class="num">230.168</td><td class="num status-missing">&minus;6,6%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-title">PERO la eficiencia mejora: tasas de paso del funnel · 2025 vs 2026</div>
+    <div class="chart-sub">% que avanza de un escalón al siguiente. 3 de 4 pasos mejoran (solo Sesión&rarr;Producto baja &minus;2,5pp). Aquí se mide eficiencia (%), no volumen.</div>
     <div id="chart-7" style="width:100%;height:360px;"></div>
   </div>
 
@@ -617,6 +640,30 @@ function rebuildAllCharts(){allCharts.forEach(function(o){o.chart.setOption(o.bu
         {name:'Web escritorio',type:'line',data:webDesktop,smooth:true,symbol:'circle',symbolSize:6,lineStyle:{color:cWeb,width:2},itemStyle:{color:cWeb}},
         {name:'App Android',type:'line',data:android,smooth:true,symbol:'circle',symbolSize:6,lineStyle:{color:cAnd,width:2},itemStyle:{color:cAnd}},
         {name:'cero',type:'line',data:[0,0,0,0,0],symbol:'none',lineStyle:{color:grid,type:'dashed',width:1},silent:true,tooltip:{show:false}}
+      ]
+    };
+  }
+  chart.setOption(buildOption());registerChart(chart,buildOption);
+  window.addEventListener('resize',function(){chart.resize();});
+})();
+
+// CHART 9 — volumen del funnel vs A-1
+(function(){
+  var chart=echarts.init(document.getElementById('chart-9'));
+  var steps=['Sesiones','Ven producto','Añaden carrito','Checkout','Pedido'];
+  var f2025=[9339495,6330007,1315326,701342,246420];
+  var f2026=[7825937,5107166,1092234,613998,238914];
+  function buildOption(){
+    var text=getCSSVar('--text3'),grid=getCSSVar('--border2'),c5=getCSSVar('--chart-s5'),c1=getCSSVar('--chart-s1');
+    return {
+      tooltip:{trigger:'axis',valueFormatter:function(v){return fmtN(v);}},
+      legend:{data:['2025','2026'],textStyle:{color:text},top:0},
+      grid:{left:8,right:16,top:32,bottom:8,containLabel:true},
+      xAxis:{type:'category',data:steps,axisLabel:{color:text,interval:0,fontSize:10},axisLine:{lineStyle:{color:grid}}},
+      yAxis:{type:'value',axisLabel:{color:text,formatter:function(v){return fmtN(v);}},splitLine:{lineStyle:{color:grid}}},
+      series:[
+        {name:'2025',type:'bar',data:f2025,itemStyle:{color:c5},barMaxWidth:34},
+        {name:'2026',type:'bar',data:f2026,itemStyle:{color:c1},barMaxWidth:34}
       ]
     };
   }
