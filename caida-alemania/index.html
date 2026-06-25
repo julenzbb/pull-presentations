@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Análisis caída Alemania · Pull&Bear eCommerce</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <style>
+:root {
+  --bg:#f6f6f6; --surface:#ffffff; --surface2:#ededed;
+  --border:#c9c9c9; --border2:#ededed;
+  --text:#1b1b1b; --text2:#2e2e2e; --text3:#5c5c5c; --text4:#919191;
+  --header-bg:#000000;
+  --shadow:rgba(0,0,0,0.06); --shadow-card:0 1px 3px var(--shadow);
+  --radius:4px; --today-color:#e12d3c;
+  --alert-info-bg:#e5f4ff; --alert-info-border:#2280c3; --alert-info-text:#2280c3;
+  --alert-warning-bg:#fff2e5; --alert-warning-border:#cd4b00; --alert-warning-text:#cd4b00;
+  --alert-error-bg:#ffe5e8; --alert-error-border:#e12d3c; --alert-error-text:#e12d3c;
+  --alert-success-bg:#e2fbe8; --alert-success-border:#238830; --alert-success-text:#238830;
+  --status-ok:#238830; --status-missing:#e12d3c; --status-warning:#cd4b00;
+  --chart-s1:#1b1b1b; --chart-s2:#454545; --chart-s3:#757575; --chart-s4:#919191; --chart-s5:#adadad; --chart-s6:#c9c9c9;
+  --dim-cobalt:#4a7ab5; --dim-fern:#3d875e; --dim-amber:#a8692e; --dim-plum:#6d4e8c; --dim-teal:#2b8585; --dim-mauve:#7d5570; --dim-rust:#9e3b3b;
+  --channel-paid-search:#4a7ab5; --channel-social-paid:#6d4e8c; --channel-affiliates:#7d5570;
+  --channel-organic-search:#3d875e; --channel-direct:#1b1b1b; --channel-referral:#757575;
+}
+body.dark {
+  --bg:#000000; --surface:#1b1b1b; --surface2:#2e2e2e;
+  --border:#454545; --border2:#2e2e2e;
+  --text:#ffffff; --text2:#adadad; --text3:#919191; --text4:#757575;
+  --header-bg:#000000;
+  --shadow:rgba(0,0,0,0.40); --shadow-card:0 1px 6px var(--shadow);
+  --alert-info-bg:#001c33; --alert-info-border:#3f9fe4; --alert-info-text:#71bdf4;
+  --alert-warning-bg:#1f0e00; --alert-warning-border:#f4b271; --alert-warning-text:#fdd9b4;
+  --alert-error-bg:#200008; --alert-error-border:#f75f6c; --alert-error-text:#fdb4bb;
+  --alert-success-bg:#001a06; --alert-success-border:#4fc660; --alert-success-text:#99efae;
+  --status-ok:#4fc660; --status-missing:#f75f6c; --status-warning:#f4b271;
+  --chart-s1:#ffffff; --chart-s2:#adadad; --chart-s3:#919191; --chart-s4:#757575; --chart-s5:#5c5c5c; --chart-s6:#454545;
+  --dim-cobalt:#7aabde; --dim-fern:#6fbc91; --dim-amber:#d49663; --dim-plum:#a885d3; --dim-teal:#55b3b3; --dim-mauve:#b38caa; --dim-rust:#cf7575;
+  --channel-paid-search:#7aabde; --channel-social-paid:#a885d3; --channel-affiliates:#b38caa;
+  --channel-organic-search:#6fbc91; --channel-direct:#ffffff; --channel-referral:#919191;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:var(--text);background:var(--bg);transition:background .2s,color .2s;}
+.report-container{max-width:1100px;margin:0 auto;padding:24px;}
+.report-header{background:var(--header-bg);color:#fff;padding:28px 32px;margin-bottom:24px;}
+.report-header h1{font-size:22px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px;}
+.report-header .subtitle{font-size:14px;opacity:.8;margin-bottom:16px;}
+.report-meta{display:flex;gap:24px;font-size:12px;opacity:.7;flex-wrap:wrap;}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
+.kpi-card{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-card);border:1px solid var(--border);text-align:center;}
+.kpi-card .kpi-value{font-size:34px;font-weight:700;line-height:1.2;}
+.kpi-card .kpi-label{font-size:13px;color:var(--text3);margin-top:4px;}
+.kpi-card .kpi-delta{font-size:12px;margin-top:6px;font-weight:600;}
+.kpi-positive{color:var(--status-ok);} .kpi-negative{color:var(--status-missing);} .kpi-neutral{color:var(--text3);}
+.summary-card{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-card);border:1px solid var(--border);margin-bottom:24px;display:flex;align-items:flex-start;gap:16px;}
+.summary-card .card-icon{font-size:18px;flex-shrink:0;line-height:1;}
+.summary-card .card-content h3{font-size:16px;font-weight:600;margin-bottom:4px;}
+.summary-card .card-content p{font-size:13px;color:var(--text3);}
+.summary-card .card-content p+p{margin-top:8px;}
+.chart-container{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-card);border:1px solid var(--border);margin-bottom:24px;}
+.chart-container .chart-title{font-size:16px;font-weight:600;margin-bottom:4px;color:var(--text);}
+.chart-container .chart-sub{font-size:12px;color:var(--text4);margin-bottom:12px;}
+.table-container{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-card);border:1px solid var(--border);margin-bottom:24px;overflow-x:auto;}
+.table-container .table-title{font-size:16px;font-weight:600;margin-bottom:4px;color:var(--text);}
+.table-container .table-sub{font-size:12px;color:var(--text4);margin-bottom:12px;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead th{background:var(--surface2);padding:8px 12px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text4);border-bottom:1px solid var(--border);white-space:nowrap;}
+thead th.num,tbody td.num{text-align:right;}
+tbody td{padding:9px 12px;border-bottom:1px solid var(--border2);color:var(--text2);font-size:12px;vertical-align:middle;}
+tbody tr:hover{background:var(--surface2);}
+tbody td strong{color:var(--text);}
+.status-ok{color:var(--status-ok);font-weight:600;} .status-missing{color:var(--status-missing);font-weight:600;} .status-warning{color:var(--status-warning);font-weight:600;}
+.row-highlight td{background:var(--alert-error-bg);}
+.row-highlight:hover td{background:var(--alert-error-bg);}
+.alert-box{border-radius:var(--radius);padding:14px 18px;margin-bottom:24px;display:flex;align-items:flex-start;gap:12px;font-size:13px;}
+.alert-box .alert-icon{font-size:15px;font-weight:700;flex-shrink:0;line-height:1.3;}
+.alert-box p{margin-top:2px;}
+.alert-info{background:var(--alert-info-bg);border-left:4px solid var(--alert-info-border);color:var(--alert-info-text);}
+.alert-warning{background:var(--alert-warning-bg);border-left:4px solid var(--alert-warning-border);color:var(--alert-warning-text);}
+.alert-error{background:var(--alert-error-bg);border-left:4px solid var(--alert-error-border);color:var(--alert-error-text);}
+.alert-success{background:var(--alert-success-bg);border-left:4px solid var(--alert-success-border);color:var(--alert-success-text);}
+.section-title{font-size:15px;font-weight:700;color:var(--text);margin:8px 0 16px;text-transform:uppercase;letter-spacing:.04em;}
+.report-footer{margin-top:32px;padding:20px 0;border-top:1px solid var(--border);font-size:12px;color:var(--text4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.section-divider{margin:32px 0;border:none;border-top:1px solid var(--border);}
+.hyp-list{list-style:none;}
+.hyp-list li{padding:12px 0;border-bottom:1px solid var(--border2);display:flex;gap:12px;align-items:flex-start;}
+.hyp-list li:last-child{border-bottom:none;}
+.hyp-rank{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--surface2);color:var(--text);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);}
+.hyp-body strong{color:var(--text);} .hyp-body{color:var(--text3);font-size:13px;}
+.tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:3px;margin-left:6px;vertical-align:middle;}
+.tag-action{background:var(--alert-warning-bg);color:var(--alert-warning-text);}
+.dark-toggle{position:fixed;top:16px;right:16px;z-index:1000;padding:6px 14px;border:1px solid var(--border);background:var(--surface);color:var(--text3);border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:500;font-family:inherit;box-shadow:var(--shadow-card);}
+.dark-toggle:hover{background:var(--surface2);color:var(--text);}
+@media (max-width:768px){.report-container{padding:12px;}.report-header{padding:20px;}.kpi-grid{grid-template-columns:repeat(2,1fr);}.report-meta{flex-direction:column;gap:4px;}}
+  </style>
+</head>
+<body>
+<button class="dark-toggle" onclick="document.body.classList.toggle('dark');this.textContent=document.body.classList.contains('dark')?'Modo claro':'Modo oscuro';setTimeout(rebuildAllCharts,50)">Modo oscuro</button>
+<div class="report-container">
+
+  <div class="report-header">
+    <h1>Caída de tráfico y ventas en Alemania &mdash; Pull&amp;Bear eCommerce</h1>
+    <div class="subtitle">Diagnóstico Year-over-Year · Origen, magnitud y atribución de la caída desde febrero 2026</div>
+    <div class="report-meta">
+      <span>Periodo analizado: Feb&ndash;Jun 2026 vs 2025</span>
+      <span>Mercado: Alemania (DE)</span>
+      <span>Fuente: Zenit (Digital Data)</span>
+    </div>
+  </div>
+
+  <!-- VEREDICTO -->
+  <div class="alert-box alert-error">
+    <span class="alert-icon">&#9650;</span>
+    <div>
+      <strong>El problema es de ADQUISICIÓN DE TRÁFICO y es ESPECÍFICO de Alemania. No es estacional, no es de conversión, no es un fallo de la web ni del pago.</strong>
+      <p>La caída arranca de golpe en la <strong>semana del 9&ndash;12 de febrero 2026</strong> (fuera de rebajas) y se concentra en canales <em>orgánicos / earned</em> &mdash; afiliación &amp; prensa (&minus;61%), referral (&minus;32%) y orgánico (&minus;18%). La inversión paid <strong>creció</strong> y la conversión es <strong>igual o mejor</strong> que 2025. Alemania es el único mercado grande que pierde tráfico Y pedidos a la vez.</p>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-value kpi-negative">&minus;16,6%</div>
+      <div class="kpi-label">Sesiones YoY (full-price Feb&ndash;Abr)</div>
+      <div class="kpi-delta kpi-neutral">la mayor caída de los grandes mercados</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value kpi-negative">&minus;7,7%</div>
+      <div class="kpi-label">Pedidos YoY (full-price Feb&ndash;Abr)</div>
+      <div class="kpi-delta kpi-negative">único mercado grande en negativo</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value kpi-positive">&#9650; CVR</div>
+      <div class="kpi-label">Conversión 2026 vs 2025</div>
+      <div class="kpi-delta kpi-positive">igual o mejor todos los meses</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value kpi-negative">~40K</div>
+      <div class="kpi-label">Pedidos perdidos (Feb&ndash;May)</div>
+      <div class="kpi-delta kpi-neutral">279K &rarr; 239K vs 2025</div>
+    </div>
+  </div>
+
+  <!-- DIAGNÓSTICO EN UNA FRASE -->
+  <div class="summary-card">
+    <div class="card-icon">&#9679;</div>
+    <div class="card-content">
+      <h3>Lectura ejecutiva</h3>
+      <p>Pull&amp;Bear Alemania <strong>convierte bien</strong>: cuando un usuario entra, compra igual o mejor que el año pasado. El problema es que <strong>entran muchos menos usuarios</strong>, y la pérdida se concentra en el tráfico que <strong>no pagamos</strong> (afiliación/prensa, referral y buscadores orgánicos). Esto descarta un problema de la tienda, del checkout, del pago o de la inversión publicitaria. La firma apunta a un <strong>evento externo de adquisición ocurrido en febrero, exclusivo del mercado alemán</strong>.</p>
+      <p><strong>Validado con doble fuente:</strong> la vista de funnel de Zenit y la vista independiente de pedidos confirman la misma tendencia y el mismo punto de inflexión.</p>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- 1. EVOLUCIÓN MENSUAL -->
+  <div class="section-title">1 &middot; Cuándo empieza: el quiebre es febrero</div>
+
+  <div class="chart-container">
+    <div class="chart-title">Sesiones mensuales · Alemania · 2025 vs 2026</div>
+    <div class="chart-sub">Enero estaba prácticamente plano (&minus;1,8%). La caída se abre en febrero y se mantiene. (Jun 2026 parcial, hasta día 25)</div>
+    <div id="chart-1" style="width:100%;height:360px;"></div>
+  </div>
+
+  <div class="table-container">
+    <div class="table-title">Detalle mensual · Sesiones, conversión y pedidos · Alemania</div>
+    <div class="table-sub">CVR = pedidos / sesiones. Nota: Ene y Jun = rebajas · Nov = Black Friday (no en ventana)</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Mes</th>
+          <th class="num">Sesiones 2025</th>
+          <th class="num">Sesiones 2026</th>
+          <th class="num">YoY sesiones</th>
+          <th class="num">CVR 2025</th>
+          <th class="num">CVR 2026</th>
+          <th class="num">YoY pedidos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Enero</strong> <span style="color:var(--text4)">(rebajas)</span></td><td class="num">2.342.053</td><td class="num">2.299.024</td><td class="num status-warning">&minus;1,8%</td><td class="num">&ndash;</td><td class="num">2,81%</td><td class="num status-warning">&minus;4,7%</td></tr>
+        <tr class="row-highlight"><td><strong>Febrero</strong></td><td class="num">2.008.616</td><td class="num">1.644.891</td><td class="num status-missing">&minus;18,1%</td><td class="num">2,36%</td><td class="num">2,65%</td><td class="num status-missing">&minus;8,1%</td></tr>
+        <tr><td><strong>Marzo</strong></td><td class="num">2.391.131</td><td class="num">1.947.576</td><td class="num status-missing">&minus;18,5%</td><td class="num">2,63%</td><td class="num">3,07%</td><td class="num status-missing">&minus;5,1%</td></tr>
+        <tr><td><strong>Abril</strong></td><td class="num">2.359.190</td><td class="num">2.045.300</td><td class="num status-missing">&minus;13,3%</td><td class="num">2,84%</td><td class="num">2,95%</td><td class="num status-missing">&minus;9,9%</td></tr>
+        <tr><td><strong>Mayo</strong></td><td class="num">2.580.558</td><td class="num">2.188.170</td><td class="num status-missing">&minus;15,2%</td><td class="num">2,68%</td><td class="num">3,04%</td><td class="num status-missing">&minus;3,7%</td></tr>
+        <tr><td><strong>Junio</strong> <span style="color:var(--text4)">(rebajas, parcial)</span></td><td class="num">2.544.787</td><td class="num">1.863.233</td><td class="num status-missing">&minus;26,8%*</td><td class="num">3,11%</td><td class="num">2,98%</td><td class="num status-missing">&minus;29,7%*</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-title">Sesiones diarias · Alemania · febrero 2026</div>
+    <div class="chart-sub">El nivel cae de ~60-69K/día (semana 2-8 feb) a ~52-55K/día a partir del 9-12 feb, y ahí se estabiliza. Caída transversal a todos los canales.</div>
+    <div id="chart-2" style="width:100%;height:340px;"></div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- 2. DÓNDE: CANALES -->
+  <div class="section-title">2 &middot; De dónde desaparece el tráfico: canales earned, no el paid</div>
+
+  <div class="alert-box alert-success">
+    <span class="alert-icon">&#10003;</span>
+    <div>
+      <strong>La inversión paid NO es la causa &mdash; al contrario, ha crecido.</strong>
+      <p>Social paid +15,8% y paid search +4,6%. La fuga está en afiliación/prensa, referral y orgánico (canales que no compramos). Sumadas, estas tres pérdidas equivalen a ~1 millón de sesiones menos en Feb&ndash;May.</p>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-title">Variación de sesiones por canal · Alemania · Feb&ndash;May 2026 vs 2025</div>
+    <div class="chart-sub">En verde los canales que crecen (paid), en rojo los que caen (earned/orgánico)</div>
+    <div id="chart-3" style="width:100%;height:380px;"></div>
+  </div>
+
+  <div class="table-container">
+    <div class="table-title">Detalle por canal de marketing · Alemania · Feb&ndash;May</div>
+    <table>
+      <thead>
+        <tr><th>Canal</th><th class="num">Sesiones 2025</th><th class="num">Sesiones 2026</th><th class="num">Variación</th><th class="num">Δ absoluto</th><th>Naturaleza</th></tr>
+      </thead>
+      <tbody>
+        <tr class="row-highlight"><td><strong>Afiliación / Prensa</strong></td><td class="num">670.437</td><td class="num">258.096</td><td class="num status-missing">&minus;61,5%</td><td class="num">&minus;412.341</td><td>Earned</td></tr>
+        <tr class="row-highlight"><td><strong>Referral</strong></td><td class="num">1.515.642</td><td class="num">1.026.984</td><td class="num status-missing">&minus;32,2%</td><td class="num">&minus;488.658</td><td>Earned</td></tr>
+        <tr><td><strong>Orgánico (SEO)</strong></td><td class="num">893.713</td><td class="num">732.887</td><td class="num status-missing">&minus;18,0%</td><td class="num">&minus;160.826</td><td>Orgánico</td></tr>
+        <tr><td><strong>Directo</strong></td><td class="num">4.314.617</td><td class="num">3.784.336</td><td class="num status-missing">&minus;12,3%</td><td class="num">&minus;530.281</td><td>Directo</td></tr>
+        <tr><td><strong>Social paid</strong></td><td class="num">804.439</td><td class="num">931.797</td><td class="num status-ok">+15,8%</td><td class="num">+127.358</td><td>Pago</td></tr>
+        <tr><td><strong>Paid search</strong></td><td class="num">784.801</td><td class="num">821.097</td><td class="num status-ok">+4,6%</td><td class="num">+36.296</td><td>Pago</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- 3. ESPECÍFICO DE ALEMANIA -->
+  <div class="section-title">3 &middot; Por qué es de Alemania: comparativa de mercados</div>
+
+  <div class="alert-box alert-info">
+    <span class="alert-icon">&#9679;</span>
+    <div>
+      <strong>Si fuera un problema técnico o global, fallaría en más países. No falla.</strong>
+      <p>En el periodo full-price limpio (Feb&ndash;Abr, sin rebajas ni Black Friday), Alemania es el ÚNICO mercado grande con sesiones Y pedidos en negativo. El resto pierde algo de tráfico pero sube pedidos. Esto descarta causa global de plataforma (cookies, tracking, algoritmo SEO general).</p>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-title">Pedidos YoY por mercado · periodo full-price Feb&ndash;Abr · 2026 vs 2025</div>
+    <div class="chart-sub">Alemania es el único en rojo. Todos los demás crecen en pedidos pese a la erosión general de tráfico.</div>
+    <div id="chart-4" style="width:100%;height:340px;"></div>
+  </div>
+
+  <div class="table-container">
+    <div class="table-title">Comparativa de mercados · periodo full-price limpio (Feb&ndash;Abr)</div>
+    <div class="table-sub">Ventana sin campañas: la lectura más comparable y libre de estacionalidad de rebajas</div>
+    <table>
+      <thead>
+        <tr><th>Mercado</th><th class="num">YoY sesiones</th><th class="num">YoY pedidos</th><th>Diagnóstico</th></tr>
+      </thead>
+      <tbody>
+        <tr class="row-highlight"><td><strong>&#127465;&#127466; Alemania</strong></td><td class="num status-missing">&minus;16,6%</td><td class="num status-missing">&minus;7,7%</td><td class="status-missing">Pierde tráfico Y negocio</td></tr>
+        <tr><td>&#127466;&#127480; España</td><td class="num status-warning">&minus;10,7%</td><td class="num status-ok">+14,8%</td><td class="status-ok">Sano (convierte más)</td></tr>
+        <tr><td>&#127467;&#127479; Francia</td><td class="num status-warning">&minus;2,7%</td><td class="num status-ok">+6,8%</td><td class="status-ok">Sano</td></tr>
+        <tr><td>&#127470;&#127481; Italia</td><td class="num status-warning">&minus;6,0%</td><td class="num status-ok">+13,4%</td><td class="status-ok">Sano</td></tr>
+        <tr><td>&#127468;&#127463; Reino Unido</td><td class="num status-warning">&minus;2,4%</td><td class="num status-ok">+1,8%</td><td class="status-ok">Sano</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-title">Afiliación &amp; Prensa: Alemania vs Francia (control) · YoY Feb&ndash;May</div>
+    <div class="chart-sub">La divergencia más reveladora: en Francia este canal CRECE +24%, en Alemania se hunde &minus;61%. Señal de un cambio local de afiliación/prensa en DE.</div>
+    <div id="chart-5" style="width:100%;height:340px;"></div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- 4. HIPÓTESIS Y ACCIONES -->
+  <div class="section-title">4 &middot; Causas probables y siguientes pasos</div>
+
+  <div class="summary-card">
+    <div class="card-icon">&#9650;</div>
+    <div class="card-content">
+      <h3>Hipótesis ordenadas por evidencia</h3>
+      <ul class="hyp-list">
+        <li>
+          <span class="hyp-rank">1</span>
+          <span class="hyp-body"><strong>Caída de un partner de afiliación / acuerdo de prensa alemán.</strong> Afiliación/prensa &minus;61% en DE vs +24% en FR. Es la señal más fuerte y específica. Lo más probable es que un partner o red de afiliación que enviaba mucho tráfico se cayera, cancelara o cambiara condiciones en febrero. <span class="tag tag-action">Acción: Marketing / Afiliación DE</span><br><em>Pregunta concreta: ¿qué partner(s) de afiliación o cupones de DE se perdieron o cambiaron entre el 2 y el 12 de febrero?</em></span>
+        </li>
+        <li>
+          <span class="hyp-rank">2</span>
+          <span class="hyp-body"><strong>Deterioro de posicionamiento SEO orgánico en Alemania.</strong> Orgánico &minus;18% en DE vs plano en FR &rarr; no es un cambio de algoritmo global. Puede ser pérdida de rankings frente a competencia local, o un problema técnico de SEO en las URLs del mercado alemán. <span class="tag tag-action">Acción: SEO</span><br><em>Revisar Google Search Console de DE: impresiones, posición media y páginas indexadas alrededor del 9-12 feb.</em></span>
+        </li>
+        <li>
+          <span class="hyp-rank">3</span>
+          <span class="hyp-body"><strong>Posible cambio de medición / tracking (a verificar antes de descartar).</strong> Que caiga incluso el tráfico directo (&minus;12%) la misma semana, de forma progresiva, podría indicar un cambio en el etiquetado, consentimiento de cookies o atribución que infra-registre sesiones desde el 9-feb. Conviene descartarlo para asegurar que la caída es 100% real y no parcialmente de medición. <span class="tag tag-action">Acción: Analítica / Zenit</span></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert-box alert-success">
+    <span class="alert-icon">&#10003;</span>
+    <div>
+      <strong>Lo que SÍ podemos descartar con los datos:</strong>
+      <p>&#10003; No es un bug de checkout ni de método de pago (la conversión no cae). &nbsp; &#10003; No es recorte de inversión paid (sube). &nbsp; &#10003; No es la app ni una plataforma concreta (cae web, móvil y app por igual). &nbsp; &#10003; No es estacional / calendario de rebajas (la caída está en pleno periodo full-price). &nbsp; &#10003; No es global de Pull&amp;Bear (el resto de mercados están sanos).</p>
+    </div>
+  </div>
+
+  <div class="report-footer">
+    <span>Fuentes: Zenit · DIGITAL_DATA_ZENIT (V_FACT_ECOMMERCE_FUNNEL_AGG_PB) · validado con V_FACT_PEDIDOS_AGRUP_FECHA_MERCADO · Mercado DE = ID 4</span>
+    <span>Pull&amp;Bear eCommerce &mdash; Análisis YoY 2026 vs 2025</span>
+  </div>
+
+</div>
+
+<script>
+function getCSSVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+function fmtN(v){if(v===null||v===undefined||isNaN(v))return '\u2013';var a=Math.abs(v);if(a>=1e6)return (v/1e6).toFixed(1).replace('.',',')+'\u202fM';if(a>=1e3)return (v/1e3).toFixed(0)+'\u202fK';return v.toLocaleString('es-ES');}
+function fmtPct(v,d){d=(d===undefined)?1:d;if(v===null||v===undefined||isNaN(v))return '\u2013';return (v>0?'+':'')+v.toFixed(d).replace('.',',')+'\u202f%';}
+
+var allCharts=[];
+function registerChart(c,b){allCharts.push({chart:c,build:b});}
+function rebuildAllCharts(){allCharts.forEach(function(o){o.chart.setOption(o.build(),true);});}
+
+// CHART 1 — sesiones mensuales 2025 vs 2026
+(function(){
+  var chart=echarts.init(document.getElementById('chart-1'));
+  var months=['Ene','Feb','Mar','Abr','May','Jun*'];
+  var s2025=[2342053,2008616,2391131,2359190,2580558,2544787];
+  var s2026=[2299024,1644891,1947576,2045300,2188170,1863233];
+  function buildOption(){
+    var c1=getCSSVar('--chart-s1'),c5=getCSSVar('--chart-s5'),text=getCSSVar('--text3'),grid=getCSSVar('--border2');
+    return {
+      tooltip:{trigger:'axis',valueFormatter:function(v){return fmtN(v);}},
+      legend:{data:['2025','2026'],textStyle:{color:text},top:0},
+      grid:{left:8,right:16,top:32,bottom:8,containLabel:true},
+      xAxis:{type:'category',data:months,axisLabel:{color:text},axisLine:{lineStyle:{color:grid}}},
+      yAxis:{type:'value',axisLabel:{color:text,formatter:function(v){return fmtN(v);}},splitLine:{lineStyle:{color:grid}}},
+      series:[
+        {name:'2025',type:'bar',data:s2025,itemStyle:{color:c5},barMaxWidth:34},
+        {name:'2026',type:'bar',data:s2026,itemStyle:{color:c1},barMaxWidth:34}
+      ]
+    };
+  }
+  chart.setOption(buildOption());registerChart(chart,buildOption);
+  window.addEventListener('resize',function(){chart.resize();});
+})();
+
+// CHART 2 — sesiones diarias febrero
+(function(){
+  var chart=echarts.init(document.getElementById('chart-2'));
+  var days=['2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'];
+  var sess=[68963,69430,64694,60451,60615,60025,67593,59452,59779,57534,52709,53420,51234,57999,54167,55458,53181,54306];
+  function buildOption(){
+    var c1=getCSSVar('--chart-s1'),text=getCSSVar('--text3'),grid=getCSSVar('--border2'),today=getCSSVar('--today-color');
+    return {
+      tooltip:{trigger:'axis',valueFormatter:function(v){return fmtN(v);}},
+      grid:{left:8,right:16,top:24,bottom:8,containLabel:true},
+      xAxis:{type:'category',boundaryGap:false,data:days,name:'Día de febrero',nameLocation:'middle',nameGap:28,nameTextStyle:{color:text},axisLabel:{color:text},axisLine:{lineStyle:{color:grid}}},
+      yAxis:{type:'value',min:45000,axisLabel:{color:text,formatter:function(v){return fmtN(v);}},splitLine:{lineStyle:{color:grid}}},
+      series:[{name:'Sesiones',type:'line',data:sess,smooth:true,symbol:'circle',symbolSize:6,lineStyle:{color:c1,width:2},itemStyle:{color:c1},
+        markArea:{itemStyle:{color:'rgba(225,45,60,0.10)'},data:[[{xAxis:'9'},{xAxis:'12'}]]},
+        markLine:{symbol:'none',lineStyle:{color:today,type:'dashed'},label:{formatter:'Quiebre','color':today,position:'insideEndTop'},data:[{xAxis:'9'}]}
+      }]
+    };
+  }
+  chart.setOption(buildOption());registerChart(chart,buildOption);
+  window.addEventListener('resize',function(){chart.resize();});
+})();
+
+// CHART 3 — variación por canal (horizontal, signo)
+(function(){
+  var chart=echarts.init(document.getElementById('chart-3'));
+  var data=[
+    {n:'Afiliación / Prensa',v:-61.5},
+    {n:'Referral',v:-32.2},
+    {n:'Orgánico (SEO)',v:-18.0},
+    {n:'Directo',v:-12.3},
+    {n:'Paid search',v:4.6},
+    {n:'Social paid',v:15.8}
+  ];
+  function buildOption(){
+    var text=getCSSVar('--text3'),grid=getCSSVar('--border2'),neg=getCSSVar('--status-missing'),pos=getCSSVar('--status-ok');
+    return {
+      tooltip:{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return fmtPct(v);}},
+      grid:{left:8,right:48,top:12,bottom:8,containLabel:true},
+      xAxis:{type:'value',axisLabel:{color:text,formatter:function(v){return fmtPct(v,0);}},splitLine:{lineStyle:{color:grid}},axisLine:{lineStyle:{color:grid}}},
+      yAxis:{type:'category',data:data.map(function(d){return d.n;}),axisLabel:{color:text},axisLine:{lineStyle:{color:grid}},axisTick:{show:false}},
+      series:[{type:'bar',data:data.map(function(d){return {value:d.v,itemStyle:{color:d.v<0?neg:pos}};}),barMaxWidth:24,
+        label:{show:true,position:'right',color:text,formatter:function(p){return fmtPct(p.value);}}}]
+    };
+  }
+  chart.setOption(buildOption());registerChart(chart,buildOption);
+  window.addEventListener('resize',function(){chart.resize();});
+})();
+
+// CHART 4 — pedidos YoY por mercado
+(function(){
+  var chart=echarts.init(document.getElementById('chart-4'));
+  var data=[
+    {n:'Alemania',v:-7.7},
+    {n:'Reino Unido',v:1.8},
+    {n:'Francia',v:6.8},
+    {n:'Italia',v:13.4},
+    {n:'España',v:14.8}
+  ];
+  function buildOption(){
+    var text=getCSSVar('--text3'),grid=getCSSVar('--border2'),neg=getCSSVar('--status-missing'),pos=getCSSVar('--status-ok');
+    return {
+      tooltip:{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return fmtPct(v);}},
+      grid:{left:8,right:48,top:12,bottom:8,containLabel:true},
+      xAxis:{type:'value',axisLabel:{color:text,formatter:function(v){return fmtPct(v,0);}},splitLine:{lineStyle:{color:grid}},axisLine:{lineStyle:{color:grid}}},
+      yAxis:{type:'category',data:data.map(function(d){return d.n;}),axisLabel:{color:text},axisLine:{lineStyle:{color:grid}},axisTick:{show:false}},
+      series:[{type:'bar',data:data.map(function(d){return {value:d.v,itemStyle:{color:d.v<0?neg:pos}};}),barMaxWidth:30,
+        label:{show:true,position:'right',color:text,formatter:function(p){return fmtPct(p.value);}}}]
+    };
+  }
+  chart.setOption(buildOption());registerChart(chart,buildOption);
+  window.addEventListener('resize',function(){chart.resize();});
+})();
+
+// CHART 5 — afiliación DE vs FR
+(function(){
+  var chart=echarts.init(document.getElementById('chart-5'));
+  function buildOption(){
+    var text=getCSSVar('--text3'),grid=getCSSVar('--border2'),c5=getCSSVar('--chart-s5'),c1=getCSSVar('--chart-s1');
+    return {
+      tooltip:{trigger:'axis',valueFormatter:function(v){return fmtN(v);}},
+      legend:{data:['2025','2026'],textStyle:{color:text},top:0},
+      grid:{left:8,right:16,top:32,bottom:8,containLabel:true},
+      xAxis:{type:'category',data:['Alemania  (−61,5%)','Francia  (+24,4%)'],axisLabel:{color:text},axisLine:{lineStyle:{color:grid}}},
+      yAxis:{type:'value',axisLabel:{color:text,formatter:function(v){return fmtN(v);}},splitLine:{lineStyle:{color:grid}}},
+      series:[
+        {name:'2025',type:'bar',data:[670437,308255],itemStyle:{color:c5},barMaxWidth:50},
+        {name:'2026',type:'bar',data:[258096,383485],itemStyle:{color:c1},barMaxWidth:50}
+      ]
+    };
+  }
+  chart.setOption(buildOption());registerChart(chart,buildOption);
+  window.addEventListener('resize',function(){chart.resize();});
+})();
+</script>
+</body>
+</html>
